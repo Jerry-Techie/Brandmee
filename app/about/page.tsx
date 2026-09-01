@@ -5,7 +5,7 @@ import StatsCounter from '@/components/StatsCounter';
 export default function AboutPage() {
   return (
     <>
-      <section className="about-hero" style={{ padding: '4rem 0 2rem', textAlignment: 'center' }}>
+      <section className="about-hero" style={{ padding: '4rem 0 2rem', textAlign: 'center' }}>
         <div className="wrapper" style={{ textAlign: 'center' }}>
           <h1 style={{ fontSize: 'clamp(2.2rem, 5vw, 4rem)', marginBottom: '1.5rem' }}>
             Learn More About Brand<span className="title">ME</span>

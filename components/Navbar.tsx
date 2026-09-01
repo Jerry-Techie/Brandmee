@@ -59,7 +59,7 @@ export default function Navbar() {
         </nav>
 
         <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Link href="/contact" className="btn-primary" style={{ padding: '0.65rem 1.4rem', fontSize: '0.9rem' }}>
+          <Link href="/contact" className="btn-primary-nav" style={{ padding: '0.65rem 1.4rem', fontSize: '0.9rem' }}>
             <span>Get Started</span>
           </Link>
 

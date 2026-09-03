@@ -1,109 +1,92 @@
-'use client';
+"use client";
 
-import { useState } from 'react';
-import Link from 'next/link';
-import Image from 'next/image';
-import { Menu, X, ArrowRight, Sparkles } from 'lucide-react';
+import { useState } from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { Menu, X, ArrowRight } from "lucide-react";
 
-export default function Navbar() {
+type NavbarUser = {
+  isLoggedIn: boolean;
+  role: string;
+} | null;
+
+type NavbarProps = {
+  user?: NavbarUser;
+};
+
+const navLinks = [
+  { href: "/", label: "Home" },
+  { href: "/about", label: "About" },
+  { href: "/#services", label: "Services" },
+  { href: "/#portfolio", label: "Portfolio" },
+  { href: "/#testimonials", label: "Testimonials" },
+];
+
+export default function Navbar({ user }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+
+  const closeMenu = () => setIsOpen(false);
 
   return (
     <header className="navbar">
       <div className="container navbar-inner">
-        <Link href="/" className="nav-logo">
-          <Image
-            src="/images/logo/brandme-logo.svg"
-            alt="BrandME Logo"
-            width={160}
-            height={40}
-            priority
-            style={{ height: 'auto', width: 'auto' }}
-          />
+        <Link href="/" className="nav-logo" aria-label="BrandME home" onClick={closeMenu}>
+          <Image src="/images/logo/brandme-logo.svg" alt="BrandME" width={148} height={40} priority />
         </Link>
 
-        {/* Desktop Nav */}
-        <nav className="hidden-mobile">
+        <nav className="desktop-nav" aria-label="Primary navigation">
           <ul className="nav-links">
-            <li>
-              <Link href="/" className="nav-link">
-                Home
-              </Link>
-            </li>
-            <li>
-              <Link href="/about" className="nav-link">
-                About Us
-              </Link>
-            </li>
-            <li>
-              <Link href="/#services" className="nav-link">
-                Services
-              </Link>
-            </li>
-            <li>
-              <Link href="/#pricing" className="nav-link">
-                Pricing
-              </Link>
-            </li>
-            <li>
-              <Link href="/#portfolio" className="nav-link">
-                Portfolio
-              </Link>
-            </li>
-            <li>
-              <Link href="/contact" className="nav-link">
-                Contact
-              </Link>
-            </li>
+            {navLinks.map((link) => (
+              <li key={link.href}>
+                <Link href={link.href} className="nav-link">
+                  {link.label}
+                </Link>
+              </li>
+            ))}
           </ul>
         </nav>
 
-        <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-          <Link href="/contact" className="btn-primary-nav" style={{ padding: '0.65rem 1.4rem', fontSize: '0.9rem' }}>
-            <span>Get Started</span>
+        <div className="nav-actions desktop-only">
+          {user?.isLoggedIn && user.role === "admin" ? (
+            <Link href="/admin" className="btn-secondary">
+              Admin
+            </Link>
+          ) : null}
+          <Link href="/contact" className="btn-primary-nav">
+            Get Started <ArrowRight size={16} />
           </Link>
-
-          <button
-            className="mobile-toggle"
-            onClick={() => setIsOpen(!isOpen)}
-            aria-label="Toggle menu"
-          >
-            {isOpen ? <X size={24} /> : <Menu size={24} />}
-          </button>
         </div>
 
-        {/* Mobile Navigation Drawer */}
-        {isOpen && (
-          <div className="nav-links mobile-open">
-            <Link href="/" className="nav-link" onClick={() => setIsOpen(false)}>
-              Home
-            </Link>
-            <Link href="/about" className="nav-link" onClick={() => setIsOpen(false)}>
-              About Us
-            </Link>
-            <Link href="/#services" className="nav-link" onClick={() => setIsOpen(false)}>
-              Services
-            </Link>
-            <Link href="/#pricing" className="nav-link" onClick={() => setIsOpen(false)}>
-              Pricing
-            </Link>
-            <Link href="/#portfolio" className="nav-link" onClick={() => setIsOpen(false)}>
-              Portfolio
-            </Link>
-            <Link href="/contact" className="nav-link" onClick={() => setIsOpen(false)}>
-              Contact
-            </Link>
-            <Link
-              href="/contact"
-              className="btn-primary"
-              onClick={() => setIsOpen(false)}
-              style={{ marginTop: '0.5rem', textAlign: 'center' }}
-            >
-              Start Project <ArrowRight size={16} />
-            </Link>
-          </div>
-        )}
+        <button
+          type="button"
+          className="mobile-toggle"
+          aria-label={isOpen ? "Close menu" : "Open menu"}
+          aria-expanded={isOpen}
+          onClick={() => setIsOpen((current) => !current)}
+        >
+          {isOpen ? <X size={24} /> : <Menu size={24} />}
+        </button>
       </div>
+
+      {isOpen ? <button className="nav-backdrop" aria-label="Close menu" onClick={closeMenu} /> : null}
+
+      <nav className={`mobile-drawer ${isOpen ? "open" : ""}`} aria-label="Mobile navigation">
+        <div className="mobile-drawer-content">
+          {navLinks.map((link) => (
+            <Link key={link.href} href={link.href} className="nav-link" onClick={closeMenu}>
+              {link.label}
+            </Link>
+          ))}
+          {user?.isLoggedIn && user.role === "admin" ? (
+            <Link href="/admin" className="btn-secondary mobile-btn" onClick={closeMenu}>
+              Admin
+            </Link>
+          ) : null}
+          <Link href="/contact" className="btn-primary-nav mobile-btn" onClick={closeMenu}>
+            Get Started <ArrowRight size={16} />
+          </Link>
+        </div>
+      </nav>
     </header>
   );
 }

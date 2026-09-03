@@ -156,8 +156,8 @@ export default function AboutPage() {
                 <tr style={{ borderBottom: '1px solid #222222' }}>
                   <td style={{ padding: '1rem 1.2rem', fontWeight: '600' }}>Technical Skills Needed</td>
                   <td style={{ padding: '1rem 1.2rem', textAlign: 'center' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#22c55e', fontWeight: '700' }}>
-                      <Check size={18} /> Zero Skills Required
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--gold)', fontWeight: '700' }}>
+                      Zero Skills Required
                     </span>
                   </td>
                   <td style={{ padding: '1rem 1.2rem', textAlign: 'center', color: 'var(--mist)' }}>None</td>
@@ -171,8 +171,8 @@ export default function AboutPage() {
                 <tr style={{ borderBottom: '1px solid #222222' }}>
                   <td style={{ padding: '1rem 1.2rem', fontWeight: '600' }}>Ongoing Maintenance & Edits</td>
                   <td style={{ padding: '1rem 1.2rem', textAlign: 'center' }}>
-                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: '#22c55e', fontWeight: '700' }}>
-                      <Check size={18} /> Done-For-You Monthly
+                    <span style={{ display: 'inline-flex', alignItems: 'center', gap: '0.4rem', color: 'var(--gold)', fontWeight: '700' }}>
+                     Done-For-You Monthly
                     </span>
                   </td>
                   <td style={{ padding: '1rem 1.2rem', textAlign: 'center', color: '#ef4444' }}>Uncertain availability</td>

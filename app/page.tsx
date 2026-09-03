@@ -3,6 +3,7 @@ import { ArrowRight, Sparkles, Zap, Shield, Layout, Server, Palette, Layers, Sta
 import StatsCounter from '@/components/StatsCounter';
 import PricingCalculator from '@/components/PricingCalculator';
 import PortfolioGallery from '@/components/PortfolioGallery';
+import TestimonialsPage from '@/components/TestimonialsPage';
 import logo from '@/public/images/logo/brandme-favicon-64.png';
 import Image from 'next/image';
 import React from 'react';
@@ -46,12 +47,12 @@ export default function HomePage() {
         {/* Floating Glassmorphic Badges */}
         <div className="hero-floating-card card-left">
           <MessageSquare size={16} color="var(--gold)" />
-          <span>Web Support and Consultation</span>
+          <span>Expert support whenever you need it</span>
         </div>
 
         <div className="hero-floating-card card-right">
           <CheckCircle size={16} color="#ff4d1c" />
-          <span>Quality Design and Delivery</span>
+          <span>Quality design and fast delivery</span>
         </div>
 
         <div className="container hero-container">
@@ -319,53 +320,10 @@ export default function HomePage() {
       {/* PORTFOLIO SECTION */}
       <PortfolioGallery />
 
-      {/* TESTIMONIALS SECTION */}
-      <section style={{ padding: '6rem 0' }}>
-        <div className="container">
-          <div className="section-header">
-            <h2 className="section-title">
-              What Our <span className="gradient-text-flame">Clients Say</span>
-            </h2>
-            <p className="section-desc">
-              Real feedback from business owners who trusted BrandME with their online brand.
-            </p>
-          </div>
+      {/* Testimonial SECTION */}
+      <TestimonialsPage />
 
-          <div style={{ maxWidth: '720px', margin: '0 auto' }}>
-            <div className="glass-card" style={{ padding: '2.5rem', fontStyle: 'italic', border: '1px solid var(--gold-glow)' }}>
-              <div style={{ display: 'flex', gap: '0.3rem', marginBottom: '1.25rem', color: 'var(--gold)' }}>
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} size={18} fill="currentColor" />
-                ))}
-              </div>
-              <p style={{ fontSize: '1.1rem', color: 'var(--text-main)', lineHeight: '1.7', marginBottom: '1.5rem' }}>
-                &ldquo;The website has helped me boost my business online immensely! It gives my customers quick access to reach me, order services, and view past projects. BrandME delivered in 7 days as promised!&rdquo;
-              </p>
-              <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-                <div
-                  style={{
-                    width: '44px',
-                    height: '44px',
-                    borderRadius: '50%',
-                    background: 'var(--gold)',
-                    color: '#08090d',
-                    fontWeight: '700',
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                  }}
-                >
-                  OG
-                </div>
-                <div>
-                  <h4 style={{ fontSize: '1rem', fontWeight: '700', color: 'var(--text-main)' }}>Okeme Godspower</h4>
-                  <p style={{ fontSize: '0.85rem', color: 'var(--text-muted)' }}>Founder, Okeme Painting & Solar Installation</p>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
+
 
       {/* CTA BANNER */}
       <section style={{ padding: '4rem 0 6rem' }}>

@@ -101,151 +101,160 @@ export default function PricingCalculator() {
           </div>
         </div>
 
-        {/* Pricing Cards Grid */}
-        <div
-          style={{
-            display: 'grid',
-            gridTemplateColumns: 'repeat(auto-fit, minmax(260px, 1fr))',
-            gap: '2rem',
-            marginBottom: '4rem',
-          }}
-        >
-          {/* STARTER */}
-          <div className="pricing-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
-                STARTER
-              </span>
-              <div style={{ margin: '1rem 0 1.5rem' }}>
-                <span style={{ fontSize: '3rem', fontWeight: '800', color: 'var(--text-main)' }}>$150</span>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}> + ${getMonthlyRate(20)}/mo hosting</span>
-              </div>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> 4-Page Custom Website
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Mobile Responsive Design
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Contact Form Integration
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Guaranteed 7-Day Delivery
-                </li>
-              </ul>
-            </div>
-            <Link href="/contact?plan=Starter" className="btn-secondary" style={{ width: '100%' }}>
-              Get Started
-            </Link>
-          </div>
+{/* Pricing Cards Grid */}
+<div
+  className="pricing-grid"
+>
+  {/* CARD 1 */}
+  <div className="pricing-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+    <div>
+      <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
+        STARTER
+      </span>
+      <div style={{ margin: '1rem 0 1.5rem' }}>
+        <span style={{ fontSize: '3rem', fontWeight: '800', color: 'var(--text-main)' }}>$150</span>
+        <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}> + ${getMonthlyRate(20)}/mo hosting</span>
+      </div>
+      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> 4-Page Custom Website
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Mobile Responsive Design
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Contact Form Integration
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Guaranteed 7-Day Delivery
+        </li>
+      </ul>
+    </div>
+    <Link href="/contact?plan=Starter" className="admin-btn-secondary" style={{ width: '100%', textAlign: 'center' }}>
+      Get Started
+    </Link>
+  </div>
 
-          {/* GROWTH - HIGHLIGHTED */}
-          <div
-            className="pricing-card growth-plan"
-            style={{
-              display: 'flex',
-              flexDirection: 'column',
-              justifyContent: 'space-between',
-            }}
-          >
-            <div style={{ position: 'absolute', top: '12px', right: '16px' }}>
-              <span className="badge badge-gold" style={{ fontSize: '0.75rem' }}>
-                RECOMMENDED
-              </span>
-            </div>
-            <div>
-              <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--gold)' }}>
-                GROWTH
-              </span>
-              <div style={{ margin: '1rem 0 1.5rem' }}>
-                <span style={{ fontSize: '3rem', fontWeight: '800', color: 'var(--text-main)' }}>$300</span>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}> + ${getMonthlyRate(35)}/mo hosting</span>
-              </div>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
-                  <Check size={18} color="var(--gold)" /> 7-Page Custom Website
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
-                  <Check size={18} color="var(--gold)" /> Advanced SEO Optimization
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
-                  <Check size={18} color="var(--gold)" /> Booking & Scheduling Setup
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
-                  <Check size={18} color="var(--gold)" /> Contact Form + WhatsApp Button
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
-                  <Check size={18} color="var(--gold)" /> 2 Iterative Revision Rounds
-                </li>
-              </ul>
-            </div>
-            <Link href="/contact?plan=Growth" className="btn-primary" style={{ width: '100%', background: 'linear-gradient(135deg, var(--gold) 0%, #d49500 100%)', color: '#08090d', fontWeight: '700' }}>
-              Select Growth Plan <ArrowRight size={16} />
-            </Link>
-          </div>
+  {/* CARD 2 - GROWTH */}
+  <div
+    className="pricing-card growth-plan"
+    style={{
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      position: 'relative',
+    }}
+  >
+    <div style={{ position: 'absolute', top: '12px', right: '16px' }}>
+      <span className="badge badge-gold" style={{ fontSize: '0.75rem' }}>
+        RECOMMENDED
+      </span>
+    </div>
+    <div>
+      <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--gold)' }}>
+        GROWTH
+      </span>
+      <div style={{ margin: '1rem 0 1.5rem' }}>
+        <span style={{ fontSize: '3rem', fontWeight: '800', color: 'var(--text-main)' }}>$300</span>
+        <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}> + ${getMonthlyRate(35)}/mo hosting</span>
+      </div>
+      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
+          <Check size={18} color="var(--gold)" /> 7-Page Custom Website
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
+          <Check size={18} color="var(--gold)" /> Advanced SEO Optimization
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
+          <Check size={18} color="var(--gold)" /> Booking & Scheduling Setup
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
+          <Check size={18} color="var(--gold)" /> Contact Form + WhatsApp Button
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-main)' }}>
+          <Check size={18} color="var(--gold)" /> 2 Iterative Revision Rounds
+        </li>
+      </ul>
+    </div>
+    <Link
+      href="/contact?plan=Growth"
+      className="growth-btn-primary"
+      style={{
+        width: '100%',
+        background: 'linear-gradient(135deg, var(--gold) 0%, #d49500 100%)',
+        color: '#08090d',
+        fontWeight: '700',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: '0.5rem',
+        textDecoration: 'none',
+      }}
+    >
+      Select Growth Plan <ArrowRight size={16} />
+    </Link>
+  </div>
 
-          {/* PRO */}
-          <div className="pricing-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
-                PRO
-              </span>
-              <div style={{ margin: '1rem 0 1.5rem' }}>
-                <span style={{ fontSize: '3rem', fontWeight: '800', color: 'var(--text-main)' }}>$600</span>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}> + ${getMonthlyRate(60)}/mo hosting</span>
-              </div>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Unlimited Custom Pages
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> E-commerce & Payments Ready
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Priority 24/7 Support
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Unlimited Edits & Updates
-                </li>
-              </ul>
-            </div>
-            <Link href="/contact?plan=Pro" className="btn-secondary" style={{ width: '100%' }}>
-              Select Pro Plan
-            </Link>
-          </div>
+  {/* CARD 3 - PRO */}
+  <div className="pricing-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+    <div>
+      <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
+        PRO
+      </span>
+      <div style={{ margin: '1rem 0 1.5rem' }}>
+        <span style={{ fontSize: '3rem', fontWeight: '800', color: 'var(--text-main)' }}>$600</span>
+        <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}> + ${getMonthlyRate(60)}/mo hosting</span>
+      </div>
+      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Unlimited Custom Pages
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> E-commerce & Payments Ready
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Priority 24/7 Support
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Unlimited Edits & Updates
+        </li>
+      </ul>
+    </div>
+    <Link href="/contact?plan=Pro" className="admin-btn-secondary" style={{ width: '100%', textAlign: 'center' }}>
+      Select Pro Plan
+    </Link>
+  </div>
 
-          {/* ENTERPRISE */}
-          <div className="pricing-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
-            <div>
-              <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
-                ENTERPRISE
-              </span>
-              <div style={{ margin: '1rem 0 1.5rem' }}>
-                <span style={{ fontSize: '3rem', fontWeight: '800', color: 'var(--text-main)' }}>Custom</span>
-                <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}> Tailored plan</span>
-              </div>
-              <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Multi-location Architecture
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Custom API & Backend Integration
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> Dedicated Account Manager
-                </li>
-                <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
-                  <Check size={18} color="var(--flame)" /> White-label Agency Option
-                </li>
-              </ul>
-            </div>
-            <Link href="/contact?plan=Enterprise" className="btn-secondary" style={{ width: '100%' }}>
-              Contact Sales
-            </Link>
-          </div>
-        </div>
-
+  {/* CARD 4 - ENTERPRISE (Wraps to Row 2 automatically) */}
+  <div className="pricing-card" style={{ display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+    <div>
+      <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--text-muted)' }}>
+        ENTERPRISE
+      </span>
+      <div style={{ margin: '1rem 0 1.5rem' }}>
+        <span style={{ fontSize: '3rem', fontWeight: '800', color: 'var(--text-main)' }}>Custom</span>
+        <span style={{ color: 'var(--text-muted)', fontSize: '0.95rem' }}> Tailored plan</span>
+      </div>
+      <ul style={{ listStyle: 'none', display: 'flex', flexDirection: 'column', gap: '0.8rem', marginBottom: '2rem' }}>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Multi-location Architecture
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Custom API & Backend Integration
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> Dedicated Account Manager
+        </li>
+        <li style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', color: 'var(--text-muted)' }}>
+          <Check size={18} color="var(--flame)" /> White-label Agency Option
+        </li>
+      </ul>
+    </div>
+    <Link href="/contact?plan=Enterprise" className="admin-btn-secondary" style={{ width: '100%', textAlign: 'center' }}>
+      Contact Sales
+    </Link>
+  </div>
+</div>
         {/* Interactive Custom Quote Calculator */}
         <div
           className="glass-card"

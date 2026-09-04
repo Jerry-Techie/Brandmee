@@ -3,6 +3,7 @@
 import { usePathname } from "next/navigation";
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import VisitorTracker from "@/components/VisitorTracker";
 
 type SiteUser = {
   isLoggedIn: boolean;
@@ -24,6 +25,7 @@ export default function SiteChrome({ children, user }: SiteChromeProps) {
 
   return (
     <>
+      <VisitorTracker />
       <Navbar user={user} />
       <main>{children}</main>
       <Footer />

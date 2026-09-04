@@ -1377,10 +1377,12 @@ body:has(.admin-login-wrapper) > main {
 .admin-dashboard-shell {
   display: grid;
   grid-template-columns: 260px minmax(0, 1fr);
-  min-height: 100vh;
+  height: 100vh;
+  min-height: 0;
   background: #f4f5f8;
   color: #171717;
   font-family: var(--font-dm);
+  overflow: hidden;
 }
 
 .admin-dashboard-shell::before {
@@ -1388,7 +1390,7 @@ body:has(.admin-login-wrapper) > main {
 }
 
 .admin-sidebar {
-  position: sticky;
+  position: relative;
   top: 0;
   height: 100vh;
   background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 54%, #22130d 100%);
@@ -1486,6 +1488,9 @@ body:has(.admin-login-wrapper) > main {
 
 .admin-workspace {
   min-width: 0;
+  min-height: 0;
+  display: flex;
+  flex-direction: column;
 }
 
 .admin-topbar {
@@ -1515,6 +1520,68 @@ body:has(.admin-login-wrapper) > main {
 .admin-dashboard-main {
   max-width: none;
   padding: 2rem;
+  min-height: 0;
+  overflow-y: auto;
+  flex: 1;
+}
+
+.admin-search {
+  flex: 1;
+  max-width: 34rem;
+}
+
+.admin-search > div {
+  width: 100%;
+}
+
+.admin-search-input {
+  width: 100%;
+  min-height: 2.75rem;
+  padding: 0.65rem 2.75rem 0.65rem 2.75rem !important;
+  border: 1px solid #dfe3ea;
+  border-radius: 999px;
+  background: #f8fafc;
+  color: #1f2937;
+  box-shadow: inset 0 1px 1px rgba(15, 23, 42, 0.03);
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
+}
+
+.admin-search-input::placeholder {
+  color: #9aa3af;
+}
+
+.admin-search-input:focus {
+  border-color: var(--flame);
+  background: #ffffff;
+  box-shadow: 0 0 0 4px rgba(255, 77, 28, 0.12);
+  outline: none;
+}
+
+.admin-search .admin-btn-icon {
+  margin-left: -3rem;
+  z-index: 1;
+  color: #6b7280;
+}
+
+.admin-empty-cell {
+  padding: 2rem !important;
+  text-align: center;
+  color: #6b7280;
+}
+
+.visitor-session,
+.visitor-meta {
+  display: block;
+}
+
+.visitor-session {
+  font-weight: 700;
+}
+
+.visitor-meta {
+  margin-top: 0.2rem;
+  color: #7d8792;
+  font-size: 0.75rem;
 }
 
 .admin-page-heading {
@@ -1896,6 +1963,11 @@ body:has(.admin-login-wrapper) > main {
   .admin-topbar .admin-search input {
     width: 100% !important;
     min-width: 0;
+  }
+
+  .admin-search {
+    max-width: none;
+    width: 100%;
   }
 }
 

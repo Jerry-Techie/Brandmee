@@ -1,0 +1,52 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    function isAdmin() {
+      return request.auth != null;
+    }
+
+    match /visitorEvents/{eventId} {
+      allow create: if
+        request.resource.data.keys().hasOnly([
+          'sessionId',
+          'path',
+          'referrer',
+          'userAgent',
+          'language',
+          'timezone',
+          'screen',
+          'visitedAt'
+        ])
+        && request.resource.data.sessionId is string
+        && request.resource.data.sessionId.size() > 0
+        && request.resource.data.sessionId.size() <= 100
+        && request.resource.data.path is string
+        && request.resource.data.path.size() <= 500
+        && request.resource.data.referrer is string
+        && request.resource.data.referrer.size() <= 2000
+        && request.resource.data.userAgent is string
+        && request.resource.data.userAgent.size() <= 1000
+        && request.resource.data.language is string
+        && request.resource.data.language.size() <= 50
+        && request.resource.data.timezone is string
+        && request.resource.data.timezone.size() <= 100
+        && request.resource.data.screen is string
+        && request.resource.data.screen.size() <= 50
+        && request.resource.data.visitedAt == request.time;
+
+      allow read: if isAdmin();
+      allow update, delete: if isAdmin();
+    }
+
+    match /projects/{projectId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    match /testimonials/{testimonialId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

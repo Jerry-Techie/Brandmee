@@ -30,6 +30,7 @@ import {
   BarChart3,
   CheckCircle2,
   FolderKanban,
+  Globe2,
   LayoutDashboard,
   LogOut,
   MessageSquareQuote,
@@ -37,11 +38,17 @@ import {
   Star,
   UserCircle,
 } from "lucide-react";
+import {
+  getVisitorEvents,
+  VisitorEvent,
+} from "@/lib/visitorTracker";
 
 export default function AdminPage() {
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
-  const [activeTab, setActiveTab] = useState<"projects" | "testimonials">(
+  const [activeTab, setActiveTab] = useState<
+    "projects" | "testimonials" | "visitors"
+  >(
     "projects",
   );
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -58,6 +65,7 @@ export default function AdminPage() {
 
   // Testimonials state
   const [testimonials, setTestimonials] = useState<Testimonial[]>([]);
+  const [visitors, setVisitors] = useState<VisitorEvent[]>([]);
   const [isTestimonialModalOpen, setIsTestimonialModalOpen] = useState(false);
   const [editingTestimonial, setEditingTestimonial] =
     useState<Testimonial | null>(null);
@@ -90,6 +98,7 @@ export default function AdminPage() {
       if (currentUser) {
         fetchProjects();
         fetchTestimonials();
+        fetchVisitors();
       } else {
         setLoading(false);
       }
@@ -129,6 +138,14 @@ export default function AdminPage() {
       setTestimonials(data);
     } catch (err) {
       console.error("Failed to load testimonials:", err);
+    }
+  }
+
+  async function fetchVisitors() {
+    try {
+      setVisitors(await getVisitorEvents());
+    } catch (error) {
+      console.error("Failed to load visitor events:", error);
     }
   }
 
@@ -376,8 +393,18 @@ export default function AdminPage() {
     );
   });
 
+  const filteredVisitors = visitors.filter((visitor) => {
+    const q = searchQuery.trim().toLowerCase();
+    if (!q) return true;
+    return [visitor.path, visitor.referrer, visitor.language, visitor.timezone, visitor.sessionId]
+      .join(" ")
+      .toLowerCase()
+      .includes(q);
+  });
+
   const projectsToShow = filteredProjects;
   const testimonialsToShow = filteredTestimonials;
+  const visitorsToShow = filteredVisitors;
   const featuredProjects = filteredProjects.slice(0, 3);
   const averageRating =
     filteredTestimonials.length > 0
@@ -386,6 +413,7 @@ export default function AdminPage() {
           filteredTestimonials.length
         ).toFixed(1)
       : "0.0";
+  const uniqueVisitors = new Set(filteredVisitors.map((visitor) => visitor.sessionId)).size;
 
   if (loading) {
     return (
@@ -490,6 +518,17 @@ export default function AdminPage() {
             <MessageSquareQuote size={18} />
             <span>Testimonials</span>
           </button>
+          <button
+            className={`admin-side-link ${activeTab === "visitors" ? "is-selected" : ""}`}
+            onClick={() => {
+              setActiveTab("visitors");
+              setSidebarOpen(false);
+            }}
+            type="button"
+          >
+            <Globe2 size={18} />
+            <span>Visitors</span>
+          </button>
           <a className="admin-side-link" href="/">
             <ArrowRight size={18} />
             <span>View site</span>
@@ -504,9 +543,9 @@ export default function AdminPage() {
           </span>
           <button
             onClick={
-              activeTab === "projects"
-                ? openAddProjectModal
-                : openAddTestimonialModal
+              activeTab === "testimonials"
+                ? openAddTestimonialModal
+                : openAddProjectModal
             }
             type="button"
           >
@@ -540,20 +579,16 @@ export default function AdminPage() {
                 style={{
                   position: "absolute",
                   left: "0.75rem",
-                  color: "#ffffffff",
+                  color: "#6b7280",
                   pointerEvents: "none",
                 }}
               />
               <input
                 type="search"
-                placeholder="Search projects & testimonials"
+                placeholder="Search projects, reviews, and visitors"
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="form-input"
-                style={{
-                  width: "18rem",
-                  padding: "0.5rem 0.75rem 0.5rem 2.5rem", //
-                }}
+                className="form-input admin-search-input"
                 aria-label="Search content"
               />
             </div>
@@ -633,6 +668,14 @@ export default function AdminPage() {
               <span>Total entries</span>
               <small>Site records</small>
             </div>
+            <div className="admin-metric-card">
+              <div className="admin-metric-icon violet">
+                <Globe2 size={24} />
+              </div>
+              <strong>{uniqueVisitors}</strong>
+              <span>Unique visitors</span>
+              <small>{visitors.length} page views tracked</small>
+            </div>
           </section>
 
           <section className="admin-content-grid">
@@ -655,6 +698,14 @@ export default function AdminPage() {
                   >
                     <MessageSquareQuote size={18} />
                     <span>Testimonials ({testimonials.length})</span>
+                  </button>
+                  <button
+                    onClick={() => setActiveTab("visitors")}
+                    className={`admin-tab ${activeTab === "visitors" ? "active-tab" : ""}`}
+                    type="button"
+                  >
+                    <Globe2 size={18} />
+                    <span>Visitors ({visitors.length})</span>
                   </button>
                 </div>
               ) : (
@@ -1063,6 +1114,73 @@ export default function AdminPage() {
                                 </tr>
                               ))
                             )}
+
+                          </tbody>
+                        </table>
+                      </div>
+                    </>
+                  )}
+
+                  {activeTab === "visitors" && (
+                    <>
+                      <div className="admin-dashboard-top">
+                        <div>
+                          <h2 style={{ margin: 0, fontSize: "1.5rem" }}>
+                            Website Tracker
+                          </h2>
+                          <p className="admin-subtitle">
+                            Anonymous page views and visitor device details from your public website
+                          </p>
+                        </div>
+                        <button
+                          onClick={fetchVisitors}
+                          className="btn-secondary"
+                          style={{ width: "auto" }}
+                        >
+                          Refresh
+                        </button>
+                      </div>
+                      <div className="table-container">
+                        <table className="admin-table">
+                          <thead>
+                            <tr>
+                              <th>Visited</th>
+                              <th>Page</th>
+                              <th>Visitor</th>
+                              <th>Device</th>
+                              <th>Source</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {visitorsToShow.length === 0 ? (
+                              <tr>
+                                <td colSpan={5} className="admin-empty-cell">
+                                  No visitor activity found.
+                                </td>
+                              </tr>
+                            ) : (
+                              visitorsToShow.map((visitor) => (
+                                <tr key={visitor.id}>
+                                  <td>
+                                    {visitor.visitedAt instanceof Date
+                                      ? visitor.visitedAt.toLocaleString()
+                                      : "Pending"}
+                                  </td>
+                                  <td><strong>{visitor.path}</strong></td>
+                                  <td>
+                                    <span className="visitor-session">
+                                      {visitor.sessionId.slice(0, 8)}...
+                                    </span>
+                                    <small className="visitor-meta">{visitor.timezone || "Unknown timezone"}</small>
+                                  </td>
+                                  <td>
+                                    <span>{visitor.screen || "Unknown screen"}</span>
+                                    <small className="visitor-meta">{visitor.language || "Unknown language"}</small>
+                                  </td>
+                                  <td>{visitor.referrer || "Direct"}</td>
+                                </tr>
+                              ))
+                            )}
                           </tbody>
                         </table>
                       </div>
@@ -1100,14 +1218,14 @@ export default function AdminPage() {
 
               <button
                 onClick={
-                  activeTab === "projects"
-                    ? openAddProjectModal
-                    : openAddTestimonialModal
+                  activeTab === "testimonials"
+                    ? openAddTestimonialModal
+                    : openAddProjectModal
                 }
                 className="admin-highlight-action"
                 type="button"
               >
-                Add new {activeTab === "projects" ? "project" : "testimonial"}
+                Add new {activeTab === "testimonials" ? "testimonial" : "project"}
               </button>
             </aside>
           </section>

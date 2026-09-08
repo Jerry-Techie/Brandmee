@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, FormEvent, ChangeEvent } from "react";
+import Link from "next/link";
 import {
   signInWithEmailAndPassword,
   signOut,
@@ -44,6 +45,9 @@ import {
 } from "@/lib/visitorTracker";
 
 export default function AdminPage() {
+   const [isOpen, setIsOpen] = useState(false);
+  
+    const closeMenu = () => setIsOpen(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<
@@ -480,13 +484,42 @@ export default function AdminPage() {
     <div className="admin-container admin-dashboard-shell">
       <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="admin-office">
-          <div className="admin-office-mark">B</div>
-          <div>
-            <strong>BrandME</strong>
-            <span>Main office</span>
+          <div
+            style={{
+              marginTop: "10px",
+              display: "flex",
+              flexDirection: "column",
+              gap: "4px",
+            }}
+          >
+            <Link
+              href="/admin"
+              className="nav-logo"
+              aria-label="BrandME admin"
+              onClick={closeMenu}
+            >
+              <div
+                style={{ display: "flex", alignItems: "center", gap: "12px" }}
+              >
+                <Image
+                  src="/images/logo/brandmeIcon-logo.svg"
+                  alt="BrandME Icon"
+                  width={25}
+                  height={20}
+                  priority
+                />
+                <Image
+                  src="/images/logo/brandme-logo.svg"
+                  alt="BrandME"
+                  width={100}
+                  height={20}
+                  priority
+                />
+              </div>
+            </Link>
+            <span style={{ lineHeight: "25px" }}>Main office</span>
           </div>
         </div>
-
         <nav className="admin-sidebar-nav" aria-label="Admin sections">
           <button
             className="admin-side-link is-active"
@@ -1114,7 +1147,6 @@ export default function AdminPage() {
                                 </tr>
                               ))
                             )}
-
                           </tbody>
                         </table>
                       </div>
@@ -1129,7 +1161,8 @@ export default function AdminPage() {
                             Website Tracker
                           </h2>
                           <p className="admin-subtitle">
-                            Anonymous page views and visitor device details from your public website
+                            Anonymous page views and visitor device details from
+                            your public website
                           </p>
                         </div>
                         <button
@@ -1166,16 +1199,24 @@ export default function AdminPage() {
                                       ? visitor.visitedAt.toLocaleString()
                                       : "Pending"}
                                   </td>
-                                  <td><strong>{visitor.path}</strong></td>
+                                  <td>
+                                    <strong>{visitor.path}</strong>
+                                  </td>
                                   <td>
                                     <span className="visitor-session">
                                       {visitor.sessionId.slice(0, 8)}...
                                     </span>
-                                    <small className="visitor-meta">{visitor.timezone || "Unknown timezone"}</small>
+                                    <small className="visitor-meta">
+                                      {visitor.timezone || "Unknown timezone"}
+                                    </small>
                                   </td>
                                   <td>
-                                    <span>{visitor.screen || "Unknown screen"}</span>
-                                    <small className="visitor-meta">{visitor.language || "Unknown language"}</small>
+                                    <span>
+                                      {visitor.screen || "Unknown screen"}
+                                    </span>
+                                    <small className="visitor-meta">
+                                      {visitor.language || "Unknown language"}
+                                    </small>
                                   </td>
                                   <td>{visitor.referrer || "Direct"}</td>
                                 </tr>
@@ -1225,7 +1266,8 @@ export default function AdminPage() {
                 className="admin-highlight-action"
                 type="button"
               >
-                Add new {activeTab === "testimonials" ? "testimonial" : "project"}
+                Add new{" "}
+                {activeTab === "testimonials" ? "testimonial" : "project"}
               </button>
             </aside>
           </section>

@@ -4,7 +4,7 @@ import StatsCounter from '@/components/StatsCounter';
 import PricingCalculator from '@/components/PricingCalculator';
 import PortfolioGallery from '@/components/PortfolioGallery';
 import TestimonialsPage from '@/components/TestimonialsPage';
-import logo from '@/public/images/logo/brandme-favicon-64.png';
+import logo from '@/public/images/logo/brandmeIcon-logo.svg';
 import Image from 'next/image';
 import React from 'react';
 

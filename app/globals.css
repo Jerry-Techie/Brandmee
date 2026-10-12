@@ -109,7 +109,11 @@ body::before {
   content: "";
   width: 100%;
   height: 100%;
-  background: linear-gradient(270deg, var(--color-gold) 0%, var(--color-flame) 50%);
+  background: linear-gradient(
+    270deg,
+    var(--color-gold) 0%,
+    var(--color-flame) 50%
+  );
   clip-path: circle(45% at 100% 0%);
   opacity: 0.15;
   z-index: -1;
@@ -214,7 +218,7 @@ body:has(.admin-login-wrapper) > main {
     color: var(--color-gold);
   }
 
-  /* Glass and card components */
+  /* Glass and card  */
   .glass-card,
   .pricing-card,
   .service,

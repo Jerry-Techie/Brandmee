@@ -115,7 +115,7 @@ export default function Footer() {
               </li>
               <li>
                 <Link
-                  href="/#pricing"
+                  href="/pricing"
                   className="text-dim text-[0.95rem]"
                 >
                   Pricing Packages

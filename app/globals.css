@@ -6,8 +6,8 @@
   --color-flame-deep: #ff2200;
   --color-gold: #ffb800;
   --color-cream: #faf7f2;
-  --color-mist: #888888;
-  --color-dim: #a3a3a3;
+  --color-mist: #9e9e9e;
+  --color-dim: #b3b3b3;
   --color-void: #1a1a1a;
   --color-charcoal: #2a2a2a;
 
@@ -101,7 +101,7 @@ img {
   pointer-events: none;
 }
 
-/* Global background ambient glow */
+/* Global background ambient glow — bleeds off the top-right corner */
 body::before {
   position: fixed;
   top: 0;
@@ -110,7 +110,7 @@ body::before {
   width: 100%;
   height: 100%;
   background: linear-gradient(270deg, var(--color-gold) 0%, var(--color-flame) 50%);
-  clip-path: circle(25% at right 50%);
+  clip-path: circle(45% at 100% 0%);
   opacity: 0.15;
   z-index: -1;
   pointer-events: none;
@@ -202,10 +202,6 @@ body:has(.admin-login-wrapper) > main {
     @apply inline-flex items-center justify-center gap-2 px-6 py-4 bg-[#0d0d0d] text-cream font-semibold text-base rounded-md border border-white/10 transition-all duration-300 hover:bg-[#ff4d1c43] hover:text-ink hover:-translate-y-0.5;
   }
 
-  .btn-whatsapp {
-    @apply bg-[#25d366] text-white border-0 hover:bg-[#1eb857] hover:text-white;
-  }
-
   .btn-danger {
     @apply bg-[rgba(255,34,0,0.1)] text-flame-deep border border-[rgba(255,34,0,0.24)] rounded-md px-3 py-1.5 font-bold;
   }
@@ -246,16 +242,16 @@ body:has(.admin-login-wrapper) > main {
   .pricing-card:nth-child(2) {
     background: linear-gradient(
       135deg,
-      #ff7a47 5%,
+      #000000 5%,
       var(--color-flame) 10%,
-      #ff2200 100%
+      rgb(0, 0, 0) 100%
     ) !important;
     border-color: var(--color-flame) !important;
   }
 
   /* Pricing layout grid */
   .pricing-grid {
-    @apply grid gap-8 mb-16 md:grid-cols-2 min-[1080px]:grid-cols-3;
+    @apply grid gap-6 mb-12 md:grid-cols-2 lg:grid-cols-3;
   }
 
   /* Global header & navbar */
@@ -435,9 +431,12 @@ body:has(.admin-login-wrapper) > main {
     }
 
     .hero-section {
-      padding: 3rem 0 2rem;
+      padding: 3.5rem 0 4rem;
     }
+  }
 
+  /* Hide hero decorations below xl to keep the masthead clean */
+  @media (max-width: 1279px) {
     .hero-floating-card,
     .hero-shape-ring,
     .hero-shape-square {
@@ -447,7 +446,7 @@ body:has(.admin-login-wrapper) > main {
 
   /* Landing hero section */
   .hero-section {
-    @apply pt-16 pb-12 text-center relative overflow-hidden;
+    @apply pt-20 pb-24 lg:pt-28 lg:pb-32 text-center relative overflow-hidden;
   }
 
   .hero-container {
@@ -455,7 +454,7 @@ body:has(.admin-login-wrapper) > main {
   }
 
   .hero-title {
-    @apply font-syne text-[clamp(2.2rem,5vw,5.5rem)] font-extrabold leading-[1.15] my-5 tracking-[-0.02em];
+    @apply font-syne text-[clamp(2.5rem,6vw,6rem)] font-extrabold leading-[1.15] my-6 tracking-[-0.02em];
   }
 
   .hero-subtitle {
@@ -486,6 +485,7 @@ body:has(.admin-login-wrapper) > main {
     pointer-events: none;
     z-index: 0;
     animation: pulseGlow 6s ease-in-out infinite alternate;
+    will-change: transform, opacity;
   }
 
   .hero-glow-2 {
@@ -504,6 +504,7 @@ body:has(.admin-login-wrapper) > main {
     pointer-events: none;
     z-index: 0;
     animation: floatSlow 8s ease-in-out infinite alternate;
+    will-change: transform;
   }
 
   /* Hero floating shapes */
@@ -517,6 +518,7 @@ body:has(.admin-login-wrapper) > main {
     border-radius: 50%;
     pointer-events: none;
     animation: spinSlow 20s linear infinite;
+    will-change: transform;
   }
 
   .hero-shape-square {
@@ -531,6 +533,7 @@ body:has(.admin-login-wrapper) > main {
     transform: rotate(45deg);
     pointer-events: none;
     animation: floatSlow 6s ease-in-out infinite alternate;
+    will-change: transform;
   }
 
   .hero-floating-card {
@@ -540,7 +543,6 @@ body:has(.admin-login-wrapper) > main {
     gap: 0.5rem;
     padding: 0.5rem 1rem;
     background: rgba(26, 26, 26, 0.85);
-    margin-top: 7rem;
     backdrop-filter: blur(10px);
     -webkit-backdrop-filter: blur(10px);
     border: 1px solid rgba(255, 255, 255, 0.1);
@@ -549,17 +551,18 @@ body:has(.admin-login-wrapper) > main {
     font-weight: 600;
     color: var(--color-cream);
     z-index: 3;
+    will-change: transform;
   }
 
   .hero-floating-card.card-left {
-    top: 30%;
+    top: 22%;
     left: 2%;
     animation: float 5s ease-in-out infinite;
     border-color: rgba(255, 77, 28, 0.3);
   }
 
   .hero-floating-card.card-right {
-    top: 52%;
+    top: 58%;
     right: 2%;
     animation: float 6s ease-in-out infinite 1s;
     border-color: rgba(255, 184, 0, 0.3);

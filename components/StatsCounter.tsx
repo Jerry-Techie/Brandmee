@@ -96,25 +96,23 @@ export default function StatsCounter(): JSX.Element {
   ];
 
   return (
-    <section className="py-16 border-y border-white/10 bg-white/[0.02]">
+    <section className="py-20 border-y border-white/10 bg-white/[0.02]">
       <div className="mx-auto max-w-[1200px] px-5">
-        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-8">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-y-12 gap-x-6 lg:divide-x lg:divide-white/10">
           {stats.map((stat: StatItem, idx: number) => (
             <motion.div
               key={idx}
-              className="glass-card text-center flex flex-col items-center px-6 py-8"
+              className="lg:px-8 lg:first:pl-0 text-left"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
             >
-              <div
-                className="w-14 h-14 rounded-full bg-black flex items-center justify-center mb-4"
-              >
+              <div className="mb-5">
                 {stat.icon}
               </div>
 
-              <strong className="text-[2.5rem] font-extrabold text-cream leading-[1.1] mb-[0.4rem]">
+              <strong className="block font-syne text-5xl md:text-6xl font-extrabold text-cream leading-none mb-4">
                 {stat.prefix}
                 {stat.isAnimated && stat.motionValue ? (
                   <AnimatedNumber value={stat.motionValue} decimals={stat.decimals || 0} />
@@ -124,11 +122,11 @@ export default function StatsCounter(): JSX.Element {
                 {stat.suffix}
               </strong>
 
-              <span className="text-[0.85rem] font-bold tracking-[0.05em] text-gold mb-[0.4rem]">
+              <span className="block text-xs font-bold tracking-[0.15em] text-gold mb-3">
                 {stat.label}
               </span>
 
-              <p className="text-[0.9rem] text-mist">
+              <p className="text-mist text-sm leading-relaxed">
                 {stat.subtext}
               </p>
             </motion.div>

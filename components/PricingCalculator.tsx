@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { Check, Star, Sparkles, ArrowRight, Calculator, ArrowLeftCircleIcon } from 'lucide-react';
+import { Check, ArrowRight, Calculator, ArrowLeftCircleIcon } from 'lucide-react';
 
 export default function PricingCalculator() {
   const [billingCycle, setBillingCycle] = useState<'monthly' | 'annual'>('monthly');
@@ -43,191 +43,218 @@ export default function PricingCalculator() {
     return billingCycle === 'annual' ? Math.round(rate * 0.85) : rate;
   };
 
+  const toggleBtn = (active: boolean) =>
+    `py-2.5 px-5 rounded-md font-semibold text-[0.9rem] transition-colors duration-200 ${
+      active
+        ? 'bg-flame text-white'
+        : 'bg-white/5 text-mist hover:bg-white/10 hover:text-cream'
+    }`;
+
   return (
-    <section id="pricing" className="py-24">
+    <section id="pricing" className="py-20 lg:py-24">
       <div className="mx-auto max-w-[1200px] px-5">
-        <div className="section-header">
-          <h2 className="section-title">
-            Simple, Affordable <span className="gradient-text-flame">Pricing</span>
+        {/* Left-aligned section header */}
+        <div className="max-w-2xl mb-10">
+          <div className="flex items-center gap-3 mb-5">
+            <span className="h-px w-10 bg-flame" />
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-flame">
+              Pricing
+            </span>
+          </div>
+          <h2 className="font-syne text-3xl md:text-4xl font-bold text-cream leading-[1.2] mb-4">
+            Simple, affordable <span className="gradient-text-flame">pricing</span>
           </h2>
-          <p className="section-desc">
+          <p className="text-mist text-base leading-relaxed">
             No hidden setup fees. Pick a package or customize a plan built specifically for your brand.
           </p>
 
-          {/* Billing Toggle */}
-          <div
-            className="inline-flex items-center bg-black p-[0.35rem] rounded-full border border-white/10 mt-8 gap-2"
-          >
-            <button
-              onClick={() => setBillingCycle('monthly')}
-              className={`py-2.5 px-5 rounded-full font-semibold text-[0.9rem] transition-all duration-200 ${
-                billingCycle === 'monthly'
-                  ? 'bg-flame text-white'
-                  : 'bg-transparent text-mist'
-              }`}
+          {/* Billing Toggle — segmented control */}
+          <div className="mt-6">
+            <div
+              className="inline-flex flex-wrap items-center gap-1 bg-black border border-white/10 rounded-md p-1"
+              role="group"
+              aria-label="Billing cycle"
             >
-              Monthly Hosting
-            </button>
-            <button
-              onClick={() => setBillingCycle('annual')}
-              className={`py-2.5 px-5 rounded-full font-bold text-[0.9rem] transition-all duration-200 flex items-center gap-1 ${
-                billingCycle === 'annual'
-                  ? 'bg-gold text-[#08090d]'
-                  : 'bg-transparent text-mist'
-              }`}
-            >
-              Annual Hosting <span className="text-xs bg-[#08090d] text-[#ffb800] py-[0.1rem] px-1 rounded-[10px]">15% OFF</span>
-            </button>
+              <button
+                type="button"
+                onClick={() => setBillingCycle('monthly')}
+                aria-pressed={billingCycle === 'monthly'}
+                className={toggleBtn(billingCycle === 'monthly')}
+              >
+                Monthly Hosting
+              </button>
+              <button
+                type="button"
+                onClick={() => setBillingCycle('annual')}
+                aria-pressed={billingCycle === 'annual'}
+                className={`${toggleBtn(billingCycle === 'annual')} flex items-center gap-2`}
+              >
+                Annual Hosting
+                <span className="text-[0.65rem] font-bold uppercase tracking-wide bg-[#08090d] text-[#ffb800] px-2 py-0.5 rounded-full">
+                  15% OFF
+                </span>
+              </button>
+            </div>
+            {billingCycle === 'annual' && (
+              <p className="text-mist text-xs mt-3">
+                Annual billing selected — 15% discount applied to every monthly hosting rate below.
+              </p>
+            )}
           </div>
         </div>
 
-        {/* Pricing Cards Grid */}
+        {/* Pricing Cards — 3 per row */}
         <div className="pricing-grid">
-          {/* CARD 1 */}
-          <div className="pricing-card flex flex-col justify-between">
-            <div>
-              <span className="text-[0.85rem] font-bold tracking-[0.05em] text-mist">
-                STARTER
+          {/* CARD 1 — STARTER */}
+          <div className="pricing-card p-7 flex flex-col">
+            <span className="text-xs font-bold tracking-[0.15em] text-mist mb-6">
+              STARTER
+            </span>
+            <div className="mb-6">
+              <span className="font-syne text-5xl font-extrabold text-cream">$150</span>
+              <span className="block text-mist text-sm mt-1.5">
+                + ${getMonthlyRate(20)}/mo hosting
               </span>
-              <div className="mt-4 mb-6">
-                <span className="text-5xl font-extrabold text-cream">$150</span>
-                <span className="text-mist text-[0.95rem]"> + ${getMonthlyRate(20)}/mo hosting</span>
-              </div>
-              <ul className="list-none flex flex-col gap-[0.8rem] mb-8">
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> 4-Page Custom Website
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Mobile Responsive Design
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Contact Form Integration
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Guaranteed 7-Day Delivery
-                </li>
-              </ul>
             </div>
-            <Link href="/contact?plan=Starter" className="admin-btn-secondary w-full text-center">
-              Get Started
-            </Link>
+            <ul className="list-none flex flex-col gap-3 mb-8 text-sm">
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> 4-Page Custom Website
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Mobile Responsive Design
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Contact Form Integration
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Guaranteed 7-Day Delivery
+              </li>
+            </ul>
+            <div className="mt-auto">
+              <Link href="/contact?plan=Starter" className="admin-btn-secondary w-full">
+                Get Started
+              </Link>
+            </div>
           </div>
 
-          {/* CARD 2 - GROWTH */}
-          <div
-            className="pricing-card growth-plan flex flex-col justify-between relative"
-          >
-            <div className="absolute top-3 right-4">
+          {/* CARD 2 — GROWTH */}
+          <div className="pricing-card growth-plan p-7 flex flex-col relative">
+            <div className="absolute top-4 right-4">
               <span className="badge badge-gold text-xs">
                 RECOMMENDED
               </span>
             </div>
-            <div>
-              <span className="text-[0.85rem] font-bold tracking-[0.05em] text-gold">
-                GROWTH
+            <span className="text-xs font-bold tracking-[0.15em] text-gold mb-6">
+              GROWTH
+            </span>
+            <div className="mb-6">
+              <span className="font-syne text-5xl font-extrabold text-cream">$300</span>
+              <span className="block text-[rgba(255,255,255,0.75)] text-sm mt-1.5">
+                + ${getMonthlyRate(35)}/mo hosting
               </span>
-              <div className="mt-4 mb-6">
-                <span className="text-5xl font-extrabold text-cream">$300</span>
-                <span className="text-mist text-[0.95rem]"> + ${getMonthlyRate(35)}/mo hosting</span>
-              </div>
-              <ul className="list-none flex flex-col gap-[0.8rem] mb-8">
-                <li className="flex items-center gap-[0.6rem] text-cream">
-                  <Check size={18} color="var(--gold)" /> 7-Page Custom Website
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-cream">
-                  <Check size={18} color="var(--gold)" /> Advanced SEO Optimization
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-cream">
-                  <Check size={18} color="var(--gold)" /> Booking & Scheduling Setup
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-cream">
-                  <Check size={18} color="var(--gold)" /> Contact Form + WhatsApp Button
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-cream">
-                  <Check size={18} color="var(--gold)" /> 2 Iterative Revision Rounds
-                </li>
-              </ul>
             </div>
-            <Link
-              href="/contact?plan=Growth"
-              className="growth-btn-primary bg-[linear-gradient(135deg,var(--gold)_0%,#d49500_100%)] text-[#08090d] font-bold inline-flex items-center justify-center gap-2 no-underline w-full"
-            >
-              Select Growth Plan <ArrowRight size={16} />
-            </Link>
+            <ul className="list-none flex flex-col gap-3 mb-8 text-sm">
+              <li className="flex items-center gap-2.5 text-cream">
+                <Check size={16} color="var(--gold)" /> 7-Page Custom Website
+              </li>
+              <li className="flex items-center gap-2.5 text-cream">
+                <Check size={16} color="var(--gold)" /> Advanced SEO Optimization
+              </li>
+              <li className="flex items-center gap-2.5 text-cream">
+                <Check size={16} color="var(--gold)" /> Booking & Scheduling Setup
+              </li>
+              <li className="flex items-center gap-2.5 text-cream">
+                <Check size={16} color="var(--gold)" /> Contact Form + WhatsApp Button
+              </li>
+              <li className="flex items-center gap-2.5 text-cream">
+                <Check size={16} color="var(--gold)" /> 2 Iterative Revision Rounds
+              </li>
+            </ul>
+            <div className="mt-auto">
+              <Link
+                href="/contact?plan=Growth"
+                className="growth-btn-primary no-underline"
+              >
+                Select Growth Plan <ArrowRight size={16} />
+              </Link>
+            </div>
           </div>
 
-          {/* CARD 3 - PRO */}
-          <div className="pricing-card flex flex-col justify-between">
-            <div>
-              <span className="text-[0.85rem] font-bold tracking-[0.05em] text-mist">
-                PRO
+          {/* CARD 3 — PRO */}
+          <div className="pricing-card p-7 flex flex-col">
+            <span className="text-xs font-bold tracking-[0.15em] text-mist mb-6">
+              PRO
+            </span>
+            <div className="mb-6">
+              <span className="font-syne text-5xl font-extrabold text-cream">$600</span>
+              <span className="block text-mist text-sm mt-1.5">
+                + ${getMonthlyRate(60)}/mo hosting
               </span>
-              <div className="mt-4 mb-6">
-                <span className="text-5xl font-extrabold text-cream">$600</span>
-                <span className="text-mist text-[0.95rem]"> + ${getMonthlyRate(60)}/mo hosting</span>
-              </div>
-              <ul className="list-none flex flex-col gap-[0.8rem] mb-8">
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Unlimited Custom Pages
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> E-commerce & Payments Ready
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Priority 24/7 Support
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Unlimited Edits & Updates
-                </li>
-              </ul>
             </div>
-            <Link href="/contact?plan=Pro" className="admin-btn-secondary w-full text-center">
-              Select Pro Plan
-            </Link>
+            <ul className="list-none flex flex-col gap-3 mb-8 text-sm">
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Unlimited Custom Pages
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> E-commerce & Payments Ready
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Priority 24/7 Support
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Unlimited Edits & Updates
+              </li>
+            </ul>
+            <div className="mt-auto">
+              <Link href="/contact?plan=Pro" className="admin-btn-secondary w-full">
+                Select Pro Plan
+              </Link>
+            </div>
           </div>
 
-          {/* CARD 4 - ENTERPRISE (Wraps to Row 2 automatically) */}
-          <div className="pricing-card flex flex-col justify-between">
-            <div>
-              <span className="text-[0.85rem] font-bold tracking-[0.05em] text-mist">
+          {/* CARD 4 — ENTERPRISE (full-width banner row) */}
+          <div className="pricing-card p-7 lg:col-span-3 flex flex-col md:flex-row md:items-center gap-8">
+            <div className="md:w-60 shrink-0">
+              <span className="text-xs font-bold tracking-[0.15em] text-mist">
                 ENTERPRISE
               </span>
-              <div className="mt-4 mb-6">
-                <span className="text-5xl font-extrabold text-cream">Custom</span>
-                <span className="text-mist text-[0.95rem]"> Tailored plan</span>
+              <div className="font-syne text-4xl font-extrabold text-cream mt-2">
+                Custom
               </div>
-              <ul className="list-none flex flex-col gap-[0.8rem] mb-8">
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Multi-location Architecture
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Custom API & Backend Integration
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> Dedicated Account Manager
-                </li>
-                <li className="flex items-center gap-[0.6rem] text-mist">
-                  <Check size={18} color="var(--flame)" /> White-label Agency Option
-                </li>
-              </ul>
+              <span className="text-mist text-sm">Tailored plan</span>
             </div>
-            <Link href="/contact?plan=Enterprise" className="admin-btn-secondary w-full text-center">
+            <ul className="list-none flex flex-col sm:flex-row sm:flex-wrap gap-x-8 gap-y-2.5 flex-1 text-sm">
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Multi-location Architecture
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Custom API & Backend Integration
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> Dedicated Account Manager
+              </li>
+              <li className="flex items-center gap-2.5 text-mist">
+                <Check size={16} color="var(--flame)" /> White-label Agency Option
+              </li>
+            </ul>
+            <Link href="/contact?plan=Enterprise" className="admin-btn-secondary md:w-auto whitespace-nowrap">
               Contact Sales
             </Link>
           </div>
         </div>
-        {/* Interactive Custom Quote Calculator */}
+
+        {/* Interactive Custom Quote Calculator — split layout */}
         <div
-          className="glass-card bg-[#111111] border border-[rgba(255,77,28,0.3)] px-8 py-10"
+          className="glass-card bg-[#111111] border border-[rgba(255,77,28,0.3)] p-8 lg:p-10"
         >
-          <div className="flex items-center gap-3 mb-6">
+          <div className="flex items-center gap-3 mb-8">
             <Calculator size={24} color="var(--flame)" />
             <h3 className="text-2xl font-bold">
               Interactive <span className="gradient-text-flame">Quote Builder</span>
             </h3>
           </div>
 
-          <div className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-10 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 items-center">
             {/* Options Form */}
             <div className="flex flex-col gap-6">
               <div>
@@ -279,11 +306,11 @@ export default function PricingCalculator() {
 
             {/* Price Output */}
             <div
-              className="bg-ink p-8 rounded-xl border border-white/10 text-center"
+              className="bg-ink p-6 rounded-xl border border-white/10 text-left lg:sticky lg:top-28"
             >
               <p className="text-mist text-[0.9rem] mb-2">Estimated Instant Quote</p>
               <div className="mb-4">
-                <span className="text-5xl font-extrabold text-cream">
+                <span className="font-syne text-5xl font-extrabold text-cream">
                   ${customEstimate.setup}
                 </span>
                 <span className="text-lg text-flame font-semibold"> upfront</span>
@@ -293,7 +320,7 @@ export default function PricingCalculator() {
               </p>
               <Link
                 href={`/contact?customQuote=true&pages=${pages}&setup=${customEstimate.setup}&monthly=${customEstimate.monthly}`}
-                className="btn-primary w-full"
+                className="btn-primary w-full lg:w-auto"
               >
                 Claim This Quote Now <ArrowLeftCircleIcon size={16} />
               </Link>

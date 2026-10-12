@@ -36,25 +36,31 @@ export default function PortfolioGallery() {
   return (
     <section
       id="portfolio"
-      className="py-12 px-4 bg-white/[0.01] w-full max-w-[100vw] box-border overflow-x-hidden"
+      className="py-20 lg:py-24 px-4 w-full max-w-[100vw] box-border overflow-x-hidden"
     >
       <div className="max-w-[1200px] mx-auto w-full box-border">
-        <div className="text-center mb-8">
-          <h2 className="section-title text-2xl font-extrabold">
+        <div>
+          <div className="flex items-center gap-3 mb-6">
+            <span className="h-px w-10 bg-flame" />
+            <span className="text-xs font-semibold uppercase tracking-[0.25em] text-flame">
+              Selected work
+            </span>
+          </div>
+          <h2 className="font-syne text-4xl md:text-5xl font-bold text-cream leading-[1.15] mb-5">
             Featured <span className="gradient-text-flame">Client Work</span>
           </h2>
-          <p className="section-desc max-w-[600px] mx-auto mt-2 text-mist">
+          <p className="text-mist text-lg leading-relaxed max-w-xl mb-10">
             Explore recent websites designed, developed, and deployed in 7 days or less.
           </p>
 
           {!loading && categories.length > 1 && (
-            <div className="flex justify-center gap-2 mt-6 flex-wrap">
+            <div className="flex justify-start gap-2 flex-wrap mb-4">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategory(cat)}
-                  className={`px-4 py-1 rounded-full border font-semibold text-sm cursor-pointer transition-all duration-200 ${
+                      className={`px-4 py-1 rounded-md border font-semibold text-sm cursor-pointer transition-all duration-200 ${
                     activeCategory === cat
                       ? 'bg-flame text-white border-white/10'
                       : 'bg-[#101118] text-mist border-white/10'
@@ -68,7 +74,7 @@ export default function PortfolioGallery() {
         </div>
 
         {loading ? (
-          <div className="grid grid-cols-3 max-lg:grid-cols-2 max-[640px]:grid-cols-1 gap-6 w-full box-border">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full box-border">
             {[1, 2, 3].map((n) => (
               <div
                 key={n}
@@ -79,15 +85,17 @@ export default function PortfolioGallery() {
             ))}
           </div>
         ) : filteredProjects.length === 0 ? (
-          <div className="text-center py-12 text-mist">
+          <div className="text-left py-12 text-mist">
             No projects found in this category.
           </div>
         ) : (
-          <div className="grid grid-cols-3 max-lg:grid-cols-2 max-[640px]:grid-cols-1 gap-6 w-full box-border">
-            {filteredProjects.map((project) => (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 w-full box-border">
+            {filteredProjects.map((project, index) => (
               <div
                 key={project.id}
-                className="bg-[#0d0e15] rounded-xl border border-white/10 overflow-hidden flex flex-col w-full box-border"
+                className={`bg-[#0d0e15] rounded-xl border border-white/10 overflow-hidden flex flex-col w-full box-border ${
+                  index === 0 ? 'md:col-span-2' : ''
+                }`}
               >
                 {/* Image Container */}
                 <div className="relative h-50 w-full bg-[#050508] shrink-0">
@@ -115,7 +123,7 @@ export default function PortfolioGallery() {
                 </div>
 
                 {/* Card Body */}
-                <div className="p-5 grow flex flex-col justify-between">
+                <div className="p-7 grow flex flex-col justify-between">
                   <div>
                     <h3 className="text-[1.15rem] font-bold text-white mb-2 leading-[1.3]">
                       {project.title}

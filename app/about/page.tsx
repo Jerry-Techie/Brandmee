@@ -20,7 +20,7 @@ export default function AboutPage() {
           </div>
 
           <div className="flex justify-center">
-            <Link href="/#pricing" className="btn py-[0.9rem] px-8">
+            <Link href="/pricing" className="btn py-[0.9rem] px-8">
               Get Started <ArrowRight size={18} />
             </Link>
           </div>

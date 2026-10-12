@@ -34,97 +34,31 @@ export default function PortfolioGallery() {
       : projects.filter((p) => p.category === activeCategory);
 
   return (
-    <section 
-      id="portfolio" 
-      style={{ 
-        padding: '3rem 1rem', 
-        background: 'rgba(255, 255, 255, 0.01)', 
-        width: '100%', 
-        maxWidth: '100vw', 
-        boxSizing: 'border-box',
-        overflowX: 'hidden'
-      }}
+    <section
+      id="portfolio"
+      className="py-12 px-4 bg-white/[0.01] w-full max-w-[100vw] box-border overflow-x-hidden"
     >
-      <style jsx global>{`
-        /* Responsive Grid via Pure CSS to bypass parent overrides */
-        .portfolio-gallery-grid {
-          display: grid !important;
-          grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
-          gap: 1.5rem !important;
-          width: 100% !important;
-          box-sizing: border-box !important;
-        }
-
-        @media (max-width: 1024px) {
-          .portfolio-gallery-grid {
-            grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
-          }
-        }
-
-        @media (max-width: 640px) {
-          .portfolio-gallery-grid {
-            grid-template-columns: repeat(1, minmax(0, 1fr)) !important;
-          }
-        }
-
-        /* Action Buttons Flex Layout */
-        .card-action-bar {
-          display: flex !important;
-          flex-direction: row !important;
-          align-items: center !important;
-          justify-content: space-between !important;
-          gap: 0.5rem !important;
-          width: 100% !important;
-          box-sizing: border-box !important;
-        }
-
-        .card-action-btn {
-          display: inline-flex !important;
-          align-items: center !important;
-          justify-content: center !important;
-          gap: 0.35rem !important;
-          white-space: nowrap !important;
-          box-sizing: border-box !important;
-        }
-
-        @media (max-width: 420px) {
-          .card-action-bar {
-            flex-direction: column !important;
-            align-items: stretch !important;
-          }
-          .card-action-btn {
-            width: 100% !important;
-          }
-        }
-      `}</style>
-
-      <div style={{ maxWidth: '1200px', margin: '0 auto', width: '100%', boxSizing: 'border-box' }}>
-        <div style={{ textAlign: 'center', marginBottom: '2rem' }}>
-          <h2 className="section-title" style={{ fontSize: '2rem', fontWeight: '800' }}>
+      <div className="max-w-[1200px] mx-auto w-full box-border">
+        <div className="text-center mb-8">
+          <h2 className="section-title text-2xl font-extrabold">
             Featured <span className="gradient-text-flame">Client Work</span>
           </h2>
-          <p className="section-desc" style={{ maxWidth: '600px', margin: '0.5rem auto 0', color: 'var(--text-muted, #888)' }}>
+          <p className="section-desc max-w-[600px] mx-auto mt-2 text-mist">
             Explore recent websites designed, developed, and deployed in 7 days or less.
           </p>
 
           {!loading && categories.length > 1 && (
-            <div style={{ display: 'flex', justifyContent: 'center', gap: '0.5rem', marginTop: '1.5rem', flexWrap: 'wrap' }}>
+            <div className="flex justify-center gap-2 mt-6 flex-wrap">
               {categories.map((cat) => (
                 <button
                   key={cat}
                   type="button"
                   onClick={() => setActiveCategory(cat)}
-                  style={{
-                    padding: '0.4rem 1rem',
-                    borderRadius: '9999px',
-                    background: activeCategory === cat ? 'var(--flame, #ff4500)' : '#101118',
-                    color: activeCategory === cat ? '#ffffff' : 'var(--text-muted, #888)',
-                    border: '1px solid var(--border-color, #222)',
-                    fontWeight: '600',
-                    fontSize: '0.85rem',
-                    cursor: 'pointer',
-                    transition: 'all 0.2s ease',
-                  }}
+                  className={`px-4 py-1 rounded-full border font-semibold text-sm cursor-pointer transition-all duration-200 ${
+                    activeCategory === cat
+                      ? 'bg-flame text-white border-white/10'
+                      : 'bg-[#101118] text-mist border-white/10'
+                  }`}
                 >
                   {cat}
                 </button>
@@ -134,76 +68,44 @@ export default function PortfolioGallery() {
         </div>
 
         {loading ? (
-          <div className="portfolio-gallery-grid">
+          <div className="grid grid-cols-3 max-lg:grid-cols-2 max-[640px]:grid-cols-1 gap-6 w-full box-border">
             {[1, 2, 3].map((n) => (
               <div
                 key={n}
-                style={{
-                  height: '350px',
-                  background: 'rgba(255, 255, 255, 0.03)',
-                  borderRadius: '12px',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  border: '1px solid var(--border-color, #222)',
-                }}
+                className="h-[350px] bg-white/[0.03] rounded-xl flex items-center justify-center border border-white/10"
               >
-                <Loader2 className="animate-spin" size={28} style={{ color: 'var(--text-muted, #888)' }} />
+                <Loader2 className="animate-spin text-mist" size={28} />
               </div>
             ))}
           </div>
         ) : filteredProjects.length === 0 ? (
-          <div style={{ textAlign: 'center', padding: '3rem', color: 'var(--text-muted, #888)' }}>
+          <div className="text-center py-12 text-mist">
             No projects found in this category.
           </div>
         ) : (
-          <div className="portfolio-gallery-grid">
+          <div className="grid grid-cols-3 max-lg:grid-cols-2 max-[640px]:grid-cols-1 gap-6 w-full box-border">
             {filteredProjects.map((project) => (
               <div
                 key={project.id}
-                style={{
-                  background: '#0d0e15',
-                  borderRadius: '12px',
-                  border: '1px solid var(--border-color, #222)',
-                  overflow: 'hidden',
-                  display: 'flex',
-                  flexDirection: 'column',
-                  width: '100%',
-                  boxSizing: 'border-box',
-                }}
+                className="bg-[#0d0e15] rounded-xl border border-white/10 overflow-hidden flex flex-col w-full box-border"
               >
                 {/* Image Container */}
-                <div style={{ position: 'relative', height: '200px', width: '100%', background: '#050508', flexShrink: 0 }}>
+                <div className="relative h-50 w-full bg-[#050508] shrink-0">
                   <Image
                     src={project.image}
                     alt={project.title}
                     fill
                     sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-                    style={{ objectFit: 'contain', objectPosition: 'center' }}
+                    className="object-contain object-center"
                   />
                   <div
-                    style={{
-                      position: 'absolute',
-                      inset: 0,
-                      background: 'linear-gradient(to top, rgba(13, 14, 21, 0.95) 0%, transparent 60%)',
-                      display: 'flex',
-                      alignItems: 'flex-end',
-                      padding: '0.75rem',
-                      pointerEvents: 'none',
-                    }}
+                    className="absolute inset-0 bg-[linear-gradient(to_top,rgba(13,14,21,0.95)_0%,transparent_60%)] flex items-end p-3 pointer-events-none"
                   >
-                    <div style={{ display: 'flex', gap: '0.35rem', flexWrap: 'wrap' }}>
+                    <div className="flex gap-[0.35rem] flex-wrap">
                       {project.tags?.map((tag, idx) => (
                         <span
                           key={idx}
-                          style={{
-                            fontSize: '0.7rem',
-                            background: 'rgba(0, 0, 0, 0.8)',
-                            padding: '0.2rem 0.5rem',
-                            borderRadius: '4px',
-                            border: '1px solid rgba(255, 255, 255, 0.1)',
-                            color: '#fff',
-                          }}
+                          className="text-[0.7rem] bg-[rgba(0,0,0,0.8)] py-[0.2rem] px-[0.5rem] rounded border border-white/10 text-white"
                         >
                           {tag}
                         </span>
@@ -213,24 +115,23 @@ export default function PortfolioGallery() {
                 </div>
 
                 {/* Card Body */}
-                <div style={{ padding: '1.25rem', flexGrow: 1, display: 'flex', flexDirection: 'column', justifyContent: 'space-between' }}>
+                <div className="p-5 grow flex flex-col justify-between">
                   <div>
-                    <h3 style={{ fontSize: '1.15rem', fontWeight: '700', color: '#fff', marginBottom: '0.5rem', lineHeight: '1.3' }}>
+                    <h3 className="text-[1.15rem] font-bold text-white mb-2 leading-[1.3]">
                       {project.title}
                     </h3>
-                    <p style={{ color: 'var(--text-muted, #a0a0a0)', fontSize: '0.875rem', lineHeight: '1.5', marginBottom: '1.25rem' }}>
+                    <p className="text-mist text-sm leading-[1.5] mb-5">
                       {project.description}
                     </p>
                   </div>
 
                   {/* Actions */}
-                  <div className="card-action-bar" style={{ paddingTop: '0.75rem', borderTop: '1px solid var(--border-color, #222)' }}>
+                  <div className="flex flex-row items-center justify-between gap-2 w-full box-border pt-3 border-t border-white/10 max-[420px]:flex-col max-[420px]:items-stretch">
                     <a
                       href={project.liveUrl}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="admin-btn-primary card-action-btn"
-                      style={{ padding: '0.5rem 0.75rem', fontSize: '0.8rem', flex: '1 1 auto', textDecoration: 'none' }}
+                      className="admin-btn-primary inline-flex items-center justify-center gap-[0.35rem] whitespace-nowrap box-border py-2 px-3 text-[0.8rem] grow basis-auto no-underline max-[420px]:w-full"
                     >
                       View Live <ExternalLink size={13} />
                     </a>
@@ -239,8 +140,7 @@ export default function PortfolioGallery() {
                         href={project.codeUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="admin-btn-secondary card-action-btn"
-                        style={{ padding: '0.5rem 0.75rem', fontSize: '0.8rem', textDecoration: 'none' }}
+                        className="admin-btn-secondary inline-flex items-center justify-center gap-[0.35rem] whitespace-nowrap box-border py-2 px-3 text-[0.8rem] no-underline max-[420px]:w-full"
                       >
                         <Github size={13} /> <span>Code</span>
                       </a>
@@ -248,8 +148,7 @@ export default function PortfolioGallery() {
                     <button
                       type="button"
                       onClick={() => setSelectedProject(project)}
-                      className="admin-btn-secondary card-action-btn"
-                      style={{ padding: '0.5rem 0.6rem', fontSize: '0.8rem', cursor: 'pointer' }}
+                      className="admin-btn-secondary inline-flex items-center justify-center gap-[0.35rem] whitespace-nowrap box-border py-2 px-2.5 text-[0.8rem] cursor-pointer max-[420px]:w-full"
                       title="Quick Preview"
                     >
                       <Eye size={13} />
@@ -264,65 +163,44 @@ export default function PortfolioGallery() {
         {/* Modal Quick Preview */}
         {selectedProject && (
           <div
-            style={{
-              position: 'fixed',
-              inset: 0,
-              zIndex: 9999,
-              background: 'rgba(0, 0, 0, 0.85)',
-              backdropFilter: 'blur(8px)',
-              display: 'flex',
-              alignItems: 'center',
-              justifyContent: 'center',
-              padding: '1rem',
-            }}
+            className="fixed inset-0 z-[9999] bg-black/85 backdrop-blur-md flex items-center justify-center p-4"
             onClick={() => setSelectedProject(null)}
           >
             <div
-              style={{
-                maxWidth: '650px',
-                width: '100%',
-                maxHeight: '90vh',
-                overflowY: 'auto',
-                background: '#0d0e15',
-                border: '1px solid var(--border-color, #222)',
-                padding: '1.25rem',
-                borderRadius: '12px',
-                boxSizing: 'border-box',
-              }}
+              className="max-w-[650px] w-full max-h-[90vh] overflow-y-auto bg-[#0d0e15] border border-white/10 p-5 rounded-xl box-border"
               onClick={(e) => e.stopPropagation()}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
-                <h3 style={{ fontSize: '1.2rem', fontWeight: '700', color: '#fff' }}>{selectedProject.title}</h3>
+              <div className="flex justify-between items-center mb-4">
+                <h3 className="text-xl font-bold text-white">{selectedProject.title}</h3>
                 <button
                   type="button"
                   onClick={() => setSelectedProject(null)}
-                  style={{ fontSize: '1.25rem', color: '#888', background: 'none', border: 'none', cursor: 'pointer', padding: '0.25rem' }}
+                  className="text-xl text-[#888] bg-transparent border-0 cursor-pointer p-1"
                 >
                   ✕
                 </button>
               </div>
 
-              <div style={{ position: 'relative', width: '100%', height: '220px', borderRadius: '8px', overflow: 'hidden', marginBottom: '1rem', background: '#050508' }}>
+              <div className="relative w-full h-55 rounded-lg overflow-hidden mb-4 bg-[#050508]">
                 <Image
                   src={selectedProject.image}
                   alt={selectedProject.title}
                   fill
                   sizes="(max-width: 768px) 100vw, 650px"
-                  style={{ objectFit: 'contain', objectPosition: 'center' }}
+                  className="object-contain object-center"
                 />
               </div>
 
-              <p style={{ color: '#a0a0a0', fontSize: '0.9rem', lineHeight: '1.5', marginBottom: '1.25rem' }}>
+              <p className="text-[#a0a0a0] text-[0.9rem] leading-[1.5] mb-5">
                 {selectedProject.description}
               </p>
 
-              <div style={{ display: 'flex', gap: '0.75rem', flexWrap: 'wrap' }}>
+              <div className="flex gap-3 flex-wrap">
                 <a
                   href={selectedProject.liveUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="admin-btn-primary card-action-btn"
-                  style={{ textDecoration: 'none', padding: '0.6rem 1.2rem', fontSize: '0.85rem' }}
+                  className="admin-btn-primary no-underline py-2.5 px-5 text-[0.85rem]"
                 >
                   Open Live Website <ExternalLink size={15} />
                 </a>
@@ -331,8 +209,7 @@ export default function PortfolioGallery() {
                     href={selectedProject.codeUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="admin-btn-secondary card-action-btn"
-                    style={{ textDecoration: 'none', padding: '0.6rem 1.2rem', fontSize: '0.85rem' }}
+                    className="admin-btn-secondary no-underline py-2.5 px-5 text-[0.85rem]"
                   >
                     Source Code <Github size={15} />
                   </a>

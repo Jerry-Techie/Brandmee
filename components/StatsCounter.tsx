@@ -41,7 +41,7 @@ export default function StatsCounter(): JSX.Element {
   const roundSme = useTransform(countSme, (latest) => Math.round(latest));
   const roundMarket = useTransform(countMarket, (latest) => Math.round(latest));
   const roundDays = useTransform(countDays, (latest) => Math.round(latest));
-  
+
   const roundSatisfaction = useTransform(countSatisfaction, (latest) => Math.round(latest * 10) / 10);
 
   useEffect(() => {
@@ -96,41 +96,25 @@ export default function StatsCounter(): JSX.Element {
   ];
 
   return (
-    <section style={{ padding: '4rem 0', borderBlock: '1px solid var(--border-color)', background: 'rgba(255, 255, 255, 0.02)' }}>
-      <div className="container">
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(220px, 1fr))', gap: '2rem' }}>
+    <section className="py-16 border-y border-white/10 bg-white/[0.02]">
+      <div className="mx-auto max-w-[1200px] px-5">
+        <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-8">
           {stats.map((stat: StatItem, idx: number) => (
             <motion.div
               key={idx}
-              className="glass-card"
+              className="glass-card text-center flex flex-col items-center px-6 py-8"
               initial={{ opacity: 0, y: 20 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ duration: 0.5, delay: idx * 0.1 }}
-              style={{
-                textAlign: 'center',
-                display: 'flex',
-                flexDirection: 'column',
-                alignItems: 'center',
-                padding: '2rem 1.5rem',
-              }}
             >
               <div
-                style={{
-                  width: '56px',
-                  height: '56px',
-                  borderRadius: '50%',
-                  background: 'black',
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  marginBottom: '1rem',
-                }}
+                className="w-14 h-14 rounded-full bg-black flex items-center justify-center mb-4"
               >
                 {stat.icon}
               </div>
 
-              <strong style={{ fontSize: '2.5rem', fontWeight: '800', color: 'var(--text-main)', lineHeight: '1.1', marginBottom: '0.4rem' }}>
+              <strong className="text-[2.5rem] font-extrabold text-cream leading-[1.1] mb-[0.4rem]">
                 {stat.prefix}
                 {stat.isAnimated && stat.motionValue ? (
                   <AnimatedNumber value={stat.motionValue} decimals={stat.decimals || 0} />
@@ -140,11 +124,11 @@ export default function StatsCounter(): JSX.Element {
                 {stat.suffix}
               </strong>
 
-              <span style={{ fontSize: '0.85rem', fontWeight: '700', letterSpacing: '0.05em', color: 'var(--gold)', marginBottom: '0.4rem' }}>
+              <span className="text-[0.85rem] font-bold tracking-[0.05em] text-gold mb-[0.4rem]">
                 {stat.label}
               </span>
 
-              <p style={{ fontSize: '0.9rem', color: 'var(--text-muted)' }}>
+              <p className="text-[0.9rem] text-mist">
                 {stat.subtext}
               </p>
             </motion.div>

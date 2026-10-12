@@ -1,5 +1,14 @@
 node_modules
-.env.local
+package.json
+package-lock.json
+pnpm-lock.yaml
+bun.lock
+yarn.lock
+.gitignore
+agent-manager.json
 .next
-# Local Netlify folder
-.netlify
+.env
+.env.local
+next
+env
+env.local

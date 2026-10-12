@@ -27,8 +27,8 @@ export default function TestimonialsPage() {
   }, []);
 
   return (
-    <section id="testimonials" style={{ padding: "6rem 0" }}>
-      <div className="container">
+    <section id="testimonials" className="py-24">
+      <div className="mx-auto max-w-[1200px] px-5">
         <div className="section-header">
           <h2 className="section-title">
             Client <span className="gradient-text-gold">Stories</span>
@@ -39,61 +39,38 @@ export default function TestimonialsPage() {
         </div>
 
         <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(auto-fit, minmax(280px, 1fr))",
-            gap: "1.5rem",
-          }}
+          className="grid grid-cols-[repeat(auto-fit,minmax(280px,1fr))] gap-6"
         >
           {testimonials.map((item, index) => (
             <article className="testimonial-card" key={item.id ?? `${item.name}-${index}`}>
-              <div style={{ display: "flex", gap: "0.25rem", color: "#f59e0b", marginBottom: "1rem" }}>
+              <div className="flex gap-[0.25rem] text-amber-500 mb-4">
                 {Array.from({ length: Math.max(1, Math.min(item.rating || 5, 5)) }).map((_, starIndex) => (
                   <Star key={starIndex} size={18} fill="currentColor" />
                 ))}
               </div>
 
-              <p style={{ color: "var(--cream)", fontSize: "1rem", lineHeight: 1.7, marginBottom: "1.5rem" }}>
+              <p className="text-cream text-base leading-[1.7] mb-6">
                 "{item.quote}"
               </p>
 
-              <div style={{ display: "flex", alignItems: "center", gap: "0.75rem" }}>
+              <div className="flex items-center gap-3">
                 {item.avatar ? (
                   <div
-                    style={{
-                      position: "relative",
-                      width: "2.75rem",
-                      height: "2.75rem",
-                      borderRadius: "50%",
-                      overflow: "hidden",
-                      border: "1px solid var(--charcoal)",
-                      flexShrink: 0,
-                    }}
+                    className="relative w-11 h-11 rounded-full overflow-hidden border border-charcoal shrink-0"
                   >
-                    <Image src={item.avatar} alt={item.name} fill style={{ objectFit: "cover" }} />
+                    <Image src={item.avatar} alt={item.name} fill className="object-cover" />
                   </div>
                 ) : (
                   <div
-                    style={{
-                      width: "2.75rem",
-                      height: "2.75rem",
-                      borderRadius: "50%",
-                      background: "var(--flame)",
-                      color: "#fff",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                      fontWeight: 700,
-                      flexShrink: 0,
-                    }}
+                    className="w-11 h-11 rounded-full bg-flame text-white flex items-center justify-center font-bold shrink-0"
                   >
                     {item.name.charAt(0)}
                   </div>
                 )}
 
                 <div>
-                  <strong style={{ display: "block", color: "var(--white)", lineHeight: 1.2 }}>{item.name}</strong>
-                  <span style={{ color: "var(--text-muted)", fontSize: "0.875rem" }}>
+                  <strong className="block text-white leading-[1.2]">{item.name}</strong>
+                  <span className="text-mist text-sm">
                     {item.role}
                     {item.company ? `, ${item.company}` : ""}
                   </span>

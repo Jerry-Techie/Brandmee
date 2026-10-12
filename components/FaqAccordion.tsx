@@ -39,39 +39,34 @@ export default function FaqAccordion() {
   };
 
   return (
-    <div style={{ maxWidth: '760px', margin: '0 auto' }}>
-      <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem', justifyContent: 'center', marginBottom: '1.5rem' }}>
+    <div className="max-w-[760px] mx-auto">
+      <div className="flex items-center gap-[0.6rem] justify-center mb-6">
         <HelpCircle size={22} color="var(--gold)" />
-        <h3 style={{ fontSize: '1.5rem', fontWeight: '700' }}>Frequently Asked Questions</h3>
+        <h3 className="text-2xl font-bold">Frequently Asked Questions</h3>
       </div>
 
-      <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+      <div className="flex flex-col gap-4">
         {faqs.map((faq, idx) => {
           const isOpen = openIdx === idx;
           return (
             <div
               key={idx}
-              className="glass-card"
-              style={{ padding: '1.25rem 1.5rem', cursor: 'pointer' }}
+              className="glass-card px-6 py-5 cursor-pointer"
               onClick={() => toggleFaq(idx)}
             >
-              <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', gap: '1rem' }}>
-                <h4 style={{ fontSize: '1.05rem', fontWeight: '600', color: isOpen ? 'var(--gold)' : 'var(--text-main)' }}>
+              <div className="flex justify-between items-center gap-4">
+                <h4 className={`text-[1.05rem] font-semibold ${isOpen ? 'text-gold' : 'text-cream'}`}>
                   {faq.question}
                 </h4>
                 <div
-                  style={{
-                    transform: isOpen ? 'rotate(180deg)' : 'rotate(0deg)',
-                    transition: 'transform 0.3s ease',
-                    color: isOpen ? 'var(--gold)' : 'var(--text-muted)',
-                  }}
+                  className={`transition-transform duration-300 ${isOpen ? 'rotate-180' : 'rotate-0'} ${isOpen ? 'text-gold' : 'text-mist'}`}
                 >
                   <ChevronDown size={20} />
                 </div>
               </div>
 
               {isOpen && (
-                <p style={{ marginTop: '0.8rem', color: 'var(--text-muted)', fontSize: '0.95rem', lineHeight: '1.6', borderTop: '1px solid var(--border-color)', paddingTop: '0.8rem' }}>
+                <p className="mt-[0.8rem] text-mist text-[0.95rem] leading-[1.6] border-t border-white/10 pt-[0.8rem]">
                   {faq.answer}
                 </p>
               )}

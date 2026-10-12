@@ -46,7 +46,7 @@ import {
 
 export default function AdminPage() {
    const [isOpen, setIsOpen] = useState(false);
-  
+
     const closeMenu = () => setIsOpen(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
@@ -485,12 +485,7 @@ export default function AdminPage() {
       <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="admin-office">
           <div
-            style={{
-              marginTop: "10px",
-              display: "flex",
-              flexDirection: "column",
-              gap: "4px",
-            }}
+            className="mt-2.5 flex flex-col gap-1"
           >
             <Link
               href="/admin"
@@ -499,7 +494,7 @@ export default function AdminPage() {
               onClick={closeMenu}
             >
               <div
-                style={{ display: "flex", alignItems: "center", gap: "12px" }}
+                className="flex items-center gap-3"
               >
                 <Image
                   src="/images/logo/brandmeIcon-logo.svg"
@@ -517,7 +512,7 @@ export default function AdminPage() {
                 />
               </div>
             </Link>
-            <span style={{ lineHeight: "25px" }}>Main office</span>
+            <span className="leading-[25px]">Main office</span>
           </div>
         </div>
         <nav className="admin-sidebar-nav" aria-label="Admin sections">
@@ -597,24 +592,14 @@ export default function AdminPage() {
             ☰
           </button>
           <div
-            className="admin-search"
-            style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}
+            className="admin-search flex items-center gap-2"
           >
             <div
-              style={{
-                position: "relative",
-                display: "flex",
-                alignItems: "center",
-              }}
+              className="relative flex items-center"
             >
               <Search
                 size={18}
-                style={{
-                  position: "absolute",
-                  left: "0.75rem",
-                  color: "#6b7280",
-                  pointerEvents: "none",
-                }}
+                className="absolute left-3 text-[#6b7280] pointer-events-none"
               />
               <input
                 type="search"
@@ -743,11 +728,10 @@ export default function AdminPage() {
                 </div>
               ) : (
                 <div
-                  className="admin-dashboard-top"
-                  style={{ padding: "1rem 0" }}
+                  className="admin-dashboard-top py-4"
                 >
                   <div>
-                    <h2 style={{ margin: 0, fontSize: "1.5rem" }}>
+                    <h2 className="m-0 text-2xl">
                       Search Results for "{searchQuery}"
                     </h2>
                     <p className="admin-subtitle">
@@ -757,8 +741,7 @@ export default function AdminPage() {
                   </div>
                   <button
                     onClick={() => setSearchQuery("")}
-                    className="btn-secondary"
-                    style={{ width: "auto" }}
+                    className="btn-secondary w-auto"
                   >
                     Clear Search
                   </button>
@@ -768,16 +751,11 @@ export default function AdminPage() {
               {/* IF SEARCHING: Show both filtered lists together */}
               {searchQuery.trim() !== "" ? (
                 <div
-                  style={{
-                    display: "flex",
-                    flexDirection: "column",
-                    gap: "2rem",
-                    marginTop: "1rem",
-                  }}
+                  className="flex flex-col gap-8 mt-4"
                 >
                   {/* Projects Search Results */}
                   <div>
-                    <h3 style={{ fontSize: "1.2rem", marginBottom: "0.75rem" }}>
+                    <h3 className="text-xl mb-3">
                       Matching Projects ({filteredProjects.length})
                     </h3>
                     <div className="table-container">
@@ -786,7 +764,7 @@ export default function AdminPage() {
                           <tr>
                             <th>Project</th>
                             <th>Category</th>
-                            <th style={{ textAlign: "right" }}>Actions</th>
+                            <th className="text-right">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -794,11 +772,7 @@ export default function AdminPage() {
                             <tr>
                               <td
                                 colSpan={3}
-                                style={{
-                                  textAlign: "center",
-                                  color: "#6b7280",
-                                  padding: "1rem",
-                                }}
+                                className="text-center text-[#6b7280] p-4"
                               >
                                 No matching projects found.
                               </td>
@@ -807,14 +781,11 @@ export default function AdminPage() {
                             filteredProjects.map((project) => (
                               <tr key={project.id}>
                                 <td>
-                                  <div style={{ fontWeight: 600 }}>
+                                  <div className="font-semibold">
                                     {project.title}
                                   </div>
                                   <div
-                                    style={{
-                                      fontSize: "0.75rem",
-                                      color: "#6b7280",
-                                    }}
+                                    className="text-xs text-[#6b7280]"
                                   >
                                     {project.description}
                                   </div>
@@ -824,16 +795,12 @@ export default function AdminPage() {
                                     {project.category}
                                   </span>
                                 </td>
-                                <td style={{ textAlign: "right" }}>
+                                <td className="text-right">
                                   <button
                                     onClick={() =>
                                       openEditProjectModal(project)
                                     }
-                                    className="btn-secondary"
-                                    style={{
-                                      fontSize: "0.75rem",
-                                      padding: "0.25rem 0.625rem",
-                                    }}
+                                    className="btn-secondary text-xs py-1 px-2.5"
                                   >
                                     Edit
                                   </button>
@@ -848,7 +815,7 @@ export default function AdminPage() {
 
                   {/* Testimonials Search Results */}
                   <div>
-                    <h3 style={{ fontSize: "1.2rem", marginBottom: "0.75rem" }}>
+                    <h3 className="text-xl mb-3">
                       Matching Testimonials ({filteredTestimonials.length})
                     </h3>
                     <div className="table-container">
@@ -857,7 +824,7 @@ export default function AdminPage() {
                           <tr>
                             <th>Client</th>
                             <th>Quote</th>
-                            <th style={{ textAlign: "right" }}>Actions</th>
+                            <th className="text-right">Actions</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -865,11 +832,7 @@ export default function AdminPage() {
                             <tr>
                               <td
                                 colSpan={3}
-                                style={{
-                                  textAlign: "center",
-                                  color: "#6b7280",
-                                  padding: "1rem",
-                                }}
+                                className="text-center text-[#6b7280] p-4"
                               >
                                 No matching testimonials found.
                               </td>
@@ -877,25 +840,18 @@ export default function AdminPage() {
                           ) : (
                             filteredTestimonials.map((item) => (
                               <tr key={item.id}>
-                                <td style={{ fontWeight: 600 }}>{item.name}</td>
+                                <td className="font-semibold">{item.name}</td>
                                 <td
-                                  style={{
-                                    color: "#374151",
-                                    fontSize: "0.875rem",
-                                  }}
+                                  className="text-[#374151] text-sm"
                                 >
                                   "{item.quote}"
                                 </td>
-                                <td style={{ textAlign: "right" }}>
+                                <td className="text-right">
                                   <button
                                     onClick={() =>
                                       openEditTestimonialModal(item)
                                     }
-                                    className="btn-secondary"
-                                    style={{
-                                      fontSize: "0.75rem",
-                                      padding: "0.25rem 0.625rem",
-                                    }}
+                                    className="btn-secondary text-xs py-1 px-2.5"
                                   >
                                     Edit
                                   </button>
@@ -915,7 +871,7 @@ export default function AdminPage() {
                     <>
                       <div className="admin-dashboard-top">
                         <div>
-                          <h2 style={{ margin: 0, fontSize: "1.5rem" }}>
+                          <h2 className="m-0 text-2xl">
                             Projects
                           </h2>
                           <p className="admin-subtitle">
@@ -925,8 +881,7 @@ export default function AdminPage() {
                         </div>
                         <button
                           onClick={openAddProjectModal}
-                          className="btn-primary"
-                          style={{ width: "auto" }}
+                          className="btn-primary w-auto"
                         >
                           + Add Project
                         </button>
@@ -936,11 +891,11 @@ export default function AdminPage() {
                         <table className="admin-table">
                           <thead>
                             <tr>
-                              <th style={{ width: "4rem" }}>Order</th>
+                              <th className="w-16">Order</th>
                               <th>Project</th>
                               <th>Category</th>
                               <th>Tags</th>
-                              <th style={{ textAlign: "right" }}>Actions</th>
+                              <th className="text-right">Actions</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -948,7 +903,7 @@ export default function AdminPage() {
                               <tr key={project.id}>
                                 <td>
                                   <div
-                                    style={{ display: "flex", gap: "0.25rem" }}
+                                    className="flex gap-1"
                                   >
                                     <button
                                       disabled={idx === 0}
@@ -972,21 +927,14 @@ export default function AdminPage() {
                                 </td>
                                 <td>
                                   <div
-                                    style={{
-                                      display: "flex",
-                                      alignItems: "center",
-                                      gap: "0.75rem",
-                                    }}
+                                    className="flex items-center gap-3"
                                   >
                                     <div>
-                                      <div style={{ fontWeight: 600 }}>
+                                      <div className="font-semibold">
                                         {project.title}
                                       </div>
                                       <div
-                                        style={{
-                                          fontSize: "0.75rem",
-                                          color: "#6b7280",
-                                        }}
+                                        className="text-xs text-[#6b7280]"
                                       >
                                         {project.description}
                                       </div>
@@ -999,30 +947,19 @@ export default function AdminPage() {
                                   </span>
                                 </td>
                                 <td
-                                  style={{
-                                    fontSize: "0.75rem",
-                                    color: "#6b7280",
-                                  }}
+                                  className="text-xs text-[#6b7280]"
                                 >
                                   {project.tags?.join(", ") || "—"}
                                 </td>
-                                <td style={{ textAlign: "right" }}>
+                                <td className="text-right">
                                   <div
-                                    style={{
-                                      display: "flex",
-                                      justifyContent: "flex-end",
-                                      gap: "0.5rem",
-                                    }}
+                                    className="flex justify-end gap-2"
                                   >
                                     <button
                                       onClick={() =>
                                         openEditProjectModal(project)
                                       }
-                                      className="btn-secondary"
-                                      style={{
-                                        fontSize: "0.75rem",
-                                        padding: "0.25rem 0.625rem",
-                                      }}
+                                      className="btn-secondary text-xs py-1 px-2.5"
                                     >
                                       Edit
                                     </button>
@@ -1048,7 +985,7 @@ export default function AdminPage() {
                     <>
                       <div className="admin-dashboard-top">
                         <div>
-                          <h2 style={{ margin: 0, fontSize: "1.5rem" }}>
+                          <h2 className="m-0 text-2xl">
                             Testimonials
                           </h2>
                           <p className="admin-subtitle">
@@ -1057,8 +994,7 @@ export default function AdminPage() {
                         </div>
                         <button
                           onClick={openAddTestimonialModal}
-                          className="btn-primary"
-                          style={{ width: "auto" }}
+                          className="btn-primary w-auto"
                         >
                           + Add Testimonial
                         </button>
@@ -1072,7 +1008,7 @@ export default function AdminPage() {
                               <th>Role / Company</th>
                               <th>Quote</th>
                               <th>Rating</th>
-                              <th style={{ textAlign: "right" }}>Actions</th>
+                              <th className="text-right">Actions</th>
                             </tr>
                           </thead>
                           <tbody>
@@ -1080,11 +1016,7 @@ export default function AdminPage() {
                               <tr>
                                 <td
                                   colSpan={5}
-                                  style={{
-                                    textAlign: "center",
-                                    color: "#6b7280",
-                                    padding: "2rem",
-                                  }}
+                                  className="text-center text-[#6b7280] p-8"
                                 >
                                   No testimonials found.
                                 </td>
@@ -1092,45 +1024,30 @@ export default function AdminPage() {
                             ) : (
                               testimonialsToShow.map((item) => (
                                 <tr key={item.id}>
-                                  <td style={{ fontWeight: 600 }}>
+                                  <td className="font-semibold">
                                     {item.name}
                                   </td>
                                   <td
-                                    style={{
-                                      color: "#6b7280",
-                                      fontSize: "0.875rem",
-                                    }}
+                                    className="text-[#6b7280] text-sm"
                                   >
                                     {item.role}
                                     {item.company ? ` at ${item.company}` : ""}
                                   </td>
                                   <td
-                                    style={{
-                                      color: "#374151",
-                                      fontSize: "0.875rem",
-                                      maxWidth: "20rem",
-                                    }}
+                                    className="text-[#374151] text-sm max-w-80"
                                   >
                                     "{item.quote}"
                                   </td>
                                   <td>⭐ {item.rating}</td>
-                                  <td style={{ textAlign: "right" }}>
+                                  <td className="text-right">
                                     <div
-                                      style={{
-                                        display: "flex",
-                                        justifyContent: "flex-end",
-                                        gap: "0.5rem",
-                                      }}
+                                      className="flex justify-end gap-2"
                                     >
                                       <button
                                         onClick={() =>
                                           openEditTestimonialModal(item)
                                         }
-                                        className="btn-secondary"
-                                        style={{
-                                          fontSize: "0.75rem",
-                                          padding: "0.25rem 0.625rem",
-                                        }}
+                                        className="btn-secondary text-xs py-1 px-2.5"
                                       >
                                         Edit
                                       </button>
@@ -1157,7 +1074,7 @@ export default function AdminPage() {
                     <>
                       <div className="admin-dashboard-top">
                         <div>
-                          <h2 style={{ margin: 0, fontSize: "1.5rem" }}>
+                          <h2 className="m-0 text-2xl">
                             Website Tracker
                           </h2>
                           <p className="admin-subtitle">
@@ -1167,8 +1084,7 @@ export default function AdminPage() {
                         </div>
                         <button
                           onClick={fetchVisitors}
-                          className="btn-secondary"
-                          style={{ width: "auto" }}
+                          className="btn-secondary w-auto"
                         >
                           Refresh
                         </button>
@@ -1277,16 +1193,12 @@ export default function AdminPage() {
         {isProjectModalOpen && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <h3 style={{ margin: "0 0 1rem 0", fontSize: "1.25rem" }}>
+              <h3 className="m-0 mb-4 text-xl">
                 {editingProject ? "Edit Project" : "Add New Project"}
               </h3>
               <form
                 onSubmit={handleProjectSubmit}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                }}
+                className="flex flex-col gap-4"
               >
                 <div className="form-group">
                   <label className="form-label">Title</label>
@@ -1361,26 +1273,17 @@ export default function AdminPage() {
                     type="file"
                     accept="image/*"
                     onChange={(e) => handleImageChange(e, false)}
-                    className="form-input"
-                    style={{ padding: "0.25rem" }}
+                    className="form-input p-1"
                   />
                   {imagePreview && (
                     <div
-                      className="image-preview-wrapper"
-                      style={{
-                        position: "relative",
-                        width: "100%",
-                        height: "10rem",
-                        marginTop: "0.5rem",
-                        borderRadius: "0.25rem",
-                        overflow: "hidden",
-                      }}
+                      className="image-preview-wrapper mt-2"
                     >
                       <Image
                         src={imagePreview}
                         alt="Preview"
                         fill
-                        style={{ objectFit: "cover" }}
+                        className="object-cover"
                       />
                     </div>
                   )}
@@ -1397,8 +1300,7 @@ export default function AdminPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="btn-primary"
-                    style={{ width: "auto" }}
+                    className="btn-primary w-auto"
                   >
                     {submitting ? "Saving..." : "Save Project"}
                   </button>
@@ -1412,18 +1314,14 @@ export default function AdminPage() {
         {isTestimonialModalOpen && (
           <div className="modal-overlay">
             <div className="modal-content">
-              <h3 style={{ margin: "0 0 1rem 0", fontSize: "1.25rem" }}>
+              <h3 className="m-0 mb-4 text-xl">
                 {editingTestimonial
                   ? "Edit Testimonial"
                   : "Add New Testimonial"}
               </h3>
               <form
                 onSubmit={handleTestimonialSubmit}
-                style={{
-                  display: "flex",
-                  flexDirection: "column",
-                  gap: "1rem",
-                }}
+                className="flex flex-col gap-4"
               >
                 <div className="form-grid">
                   <div className="form-group">
@@ -1495,26 +1393,17 @@ export default function AdminPage() {
                     type="file"
                     accept="image/*"
                     onChange={(e) => handleImageChange(e, true)}
-                    className="form-input"
-                    style={{ padding: "0.25rem" }}
+                    className="form-input p-1"
                   />
                   {avatarPreview && (
                     <div
-                      style={{
-                        position: "relative",
-                        width: "4rem",
-                        height: "4rem",
-                        marginTop: "0.5rem",
-                        borderRadius: "50%",
-                        overflow: "hidden",
-                        border: "1px solid #1e293b",
-                      }}
+                      className="relative w-16 h-16 mt-2 rounded-full overflow-hidden border border-[#1e293b]"
                     >
                       <Image
                         src={avatarPreview}
                         alt="Avatar preview"
                         fill
-                        style={{ objectFit: "cover" }}
+                        className="object-cover"
                       />
                     </div>
                   )}
@@ -1531,8 +1420,7 @@ export default function AdminPage() {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="btn-primary"
-                    style={{ width: "auto" }}
+                    className="btn-primary w-auto"
                   >
                     {submitting ? "Saving..." : "Save Testimonial"}
                   </button>

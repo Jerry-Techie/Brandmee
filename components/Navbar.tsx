@@ -29,30 +29,32 @@ export default function Navbar({ user }: NavbarProps) {
 
   return (
     <header className="navbar">
-      <div className="container navbar-inner">
-        <Link
-          href="/"
-          className="nav-logo"
-          aria-label="BrandME home"
-          onClick={closeMenu}
-        >
-          <div style={{ display: "flex", alignItems: "center", gap: "12px" }}>
-            <Image
-              src="/images/logo/brandmeIcon-logo.svg"
-              alt="Second Logo"
-              width={25}
-              height={20}
-              priority
-            />
-            <Image
-              src="/images/logo/brandme-logo.svg"
-              alt="BrandME"
-              width={100}
-              height={20}
-              priority
-            />
-          </div>
-        </Link>
+      <div className="navbar-inner mx-auto max-w-[1200px] px-5">
+        <div className="flex items-center gap-4 flex-wrap">
+          <Link
+            href="/"
+            className="nav-logo"
+            aria-label="BrandME home"
+            onClick={closeMenu}
+          >
+            <div className="flex items-center gap-3">
+              <Image
+                src="/images/logo/brandmeIcon-logo.svg"
+                alt="BrandME Icon"
+                width={25}
+                height={20}
+                priority
+              />
+              <Image
+                src="/images/logo/brandme-logo.svg"
+                alt="BrandME"
+                width={100}
+                height={20}
+                priority
+              />
+            </div>
+          </Link>
+        </div>
         <nav className="desktop-nav" aria-label="Primary navigation">
           <ul className="nav-links">
             {navLinks.map((link) => (

@@ -16,7 +16,6 @@
 
   --animate-float: float 5s ease-in-out infinite;
   --animate-float-slow: floatSlow 8s ease-in-out infinite alternate;
-  --animate-pulse-glow: pulseGlow 6s ease-in-out infinite alternate;
   --animate-spin-slow: spinSlow 20s linear infinite;
 
   @keyframes float {
@@ -36,17 +35,6 @@
     }
     50% {
       transform: translateY(-15px) rotate(50deg);
-    }
-  }
-
-  @keyframes pulseGlow {
-    0% {
-      transform: translateX(-50%) scale(0.95);
-      opacity: 0.7;
-    }
-    100% {
-      transform: translateX(-50%) scale(1.1);
-      opacity: 1;
     }
   }
 
@@ -102,23 +90,30 @@ img {
 }
 
 /* Global background ambient glow — bleeds off the top-right corner */
-body::before {
-  position: fixed;
-  top: 0;
-  right: 0;
-  content: "";
-  width: 100%;
-  height: 100%;
-  background: linear-gradient(
-    270deg,
-    var(--color-gold) 0%,
-    var(--color-flame) 50%
-  );
-  clip-path: circle(45% at 100% 0%);
-  opacity: 0.15;
-  z-index: -1;
-  pointer-events: none;
-}
+  body::before {
+    position: fixed;
+    top: 0;
+    right: 0;
+    content: "";
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+      270deg,
+      var(--color-gold) 0%,
+      var(--color-flame) 50%
+    );
+    clip-path: circle(45% at 100% 0%);
+    opacity: 0.15;
+    z-index: -1;
+    pointer-events: none;
+  }
+
+  @media (max-width: 767px) {
+    body::before {
+      clip-path: circle(30% at 100% 0%);
+      opacity: 0.1;
+    }
+  }
 
 a {
   color: inherit;
@@ -246,7 +241,7 @@ body:has(.admin-login-wrapper) > main {
   .pricing-card:nth-child(2) {
     background: linear-gradient(
       135deg,
-      #000000 5%,
+      rgba(219, 219, 219, 0.546)
       var(--color-flame) 10%,
       rgb(0, 0, 0) 100%
     ) !important;
@@ -338,24 +333,21 @@ body:has(.admin-login-wrapper) > main {
     .mobile-drawer {
       display: block;
       position: fixed;
-      top: 70px;
+      top: 0;
       right: 0;
       width: 220px;
       max-width: 65vw;
-      height: calc(100vh - 200px);
+      height: 100vh;
       background: #0d0d0d;
       border-left: 1px solid rgba(255, 255, 255, 0.1);
       z-index: 999;
       transform: translateX(100%);
       visibility: hidden;
-      transition:
-        transform 0.3s ease-in-out,
-        visibility 0.3s ease-in-out;
       overflow-y: auto;
+      padding-top: 70px;
     }
 
     .mobile-drawer.open {
-      transform: translateX(0);
       visibility: visible;
     }
 
@@ -439,15 +431,6 @@ body:has(.admin-login-wrapper) > main {
     }
   }
 
-  /* Hide hero decorations below xl to keep the masthead clean */
-  @media (max-width: 1279px) {
-    .hero-floating-card,
-    .hero-shape-ring,
-    .hero-shape-square {
-      display: none;
-    }
-  }
-
   /* Landing hero section */
   .hero-section {
     @apply pt-20 pb-24 lg:pt-28 lg:pb-32 text-center relative overflow-hidden;
@@ -467,109 +450,6 @@ body:has(.admin-login-wrapper) > main {
 
   .hero-ctas {
     @apply flex items-center justify-center gap-4 flex-wrap;
-  }
-
-  /* Ambient visual effects */
-  .shape,
-  .hero-glow-1 {
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 380px;
-    height: 380px;
-    background: radial-gradient(
-      circle,
-      rgba(255, 77, 28, 0.25) 0%,
-      rgba(255, 184, 0, 0.08) 50%,
-      transparent 70%
-    );
-    filter: blur(50px);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-    animation: pulseGlow 6s ease-in-out infinite alternate;
-    will-change: transform, opacity;
-  }
-
-  .hero-glow-2 {
-    position: absolute;
-    bottom: 0%;
-    right: 10%;
-    width: 260px;
-    height: 260px;
-    background: radial-gradient(
-      circle,
-      rgba(255, 184, 0, 0.2) 0%,
-      transparent 70%
-    );
-    filter: blur(45px);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 0;
-    animation: floatSlow 8s ease-in-out infinite alternate;
-    will-change: transform;
-  }
-
-  /* Hero floating shapes */
-  .hero-shape-ring {
-    position: absolute;
-    top: 35%;
-    left: 5%;
-    width: 75px;
-    height: 75px;
-    border: 2px dashed rgba(255, 77, 28, 0.35);
-    border-radius: 50%;
-    pointer-events: none;
-    animation: spinSlow 20s linear infinite;
-    will-change: transform;
-  }
-
-  .hero-shape-square {
-    position: absolute;
-    bottom: 30%;
-    right: 5%;
-    width: 60px;
-    height: 60px;
-    background: rgba(255, 255, 255, 0.03);
-    border: 1px dashed rgba(255, 184, 0, 0.35);
-    border-radius: 12px;
-    transform: rotate(45deg);
-    pointer-events: none;
-    animation: floatSlow 6s ease-in-out infinite alternate;
-    will-change: transform;
-  }
-
-  .hero-floating-card {
-    position: absolute;
-    display: flex;
-    align-items: center;
-    gap: 0.5rem;
-    padding: 0.5rem 1rem;
-    background: rgba(26, 26, 26, 0.85);
-    backdrop-filter: blur(10px);
-    -webkit-backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.1);
-    border-radius: 9999px;
-    font-size: 0.825rem;
-    font-weight: 600;
-    color: var(--color-cream);
-    z-index: 3;
-    will-change: transform;
-  }
-
-  .hero-floating-card.card-left {
-    top: 22%;
-    left: 2%;
-    animation: float 5s ease-in-out infinite;
-    border-color: rgba(255, 77, 28, 0.3);
-  }
-
-  .hero-floating-card.card-right {
-    top: 58%;
-    right: 2%;
-    animation: float 6s ease-in-out infinite 1s;
-    border-color: rgba(255, 184, 0, 0.3);
   }
 
   /* Section header styles */
@@ -610,7 +490,7 @@ body:has(.admin-login-wrapper) > main {
   }
 
   .admin-btn-secondary {
-    @apply font-dm text-[0.875rem] font-semibold px-4 py-2 bg-charcoal text-cream rounded-[0.375rem] border border-charcoal cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap transition-[background-color,color] duration-200 hover:bg-void hover:text-white;
+    @apply font-dm text-[0.875rem] font-semibold px-4 py-2 bg-charcoal text-cream rounded-md border border-charcoal cursor-pointer inline-flex items-center justify-center gap-2 whitespace-nowrap transition-[background-color,color] duration-200 hover:bg-void hover:text-white;
   }
 
   .admin-btn-danger {
@@ -636,11 +516,11 @@ body:has(.admin-login-wrapper) > main {
   }
 
   .admin-table {
-    @apply w-full min-w-[680px] text-left text-sm text-cream border-collapse;
+    @apply w-full min-w-170 text-left text-sm text-cream border-collapse;
   }
 
   .admin-table th {
-    @apply bg-ink border-b border-charcoal text-mist font-syne uppercase text-xs tracking-[0.05em] py-3.5 px-4 whitespace-nowrap;
+    @apply bg-ink border-b border-charcoal text-mist font-syne uppercase text-xs tracking-wider py-3.5 px-4 whitespace-nowrap;
   }
 
   .admin-table td {
@@ -732,7 +612,7 @@ body:has(.admin-login-wrapper) > main {
   }
 
   .login-badge {
-    @apply inline-block py-0.5 px-3 bg-[rgba(255,77,28,0.1)] border border-[rgba(255,77,28,0.3)] rounded-full text-flame text-xs font-semibold tracking-[0.05em] uppercase mb-3;
+    @apply inline-block py-0.5 px-3 bg-[rgba(255,77,28,0.1)] border border-[rgba(255,77,28,0.3)] rounded-full text-flame text-xs font-semibold tracking-wider uppercase mb-3;
   }
 
   .admin-login-card .admin-title {
@@ -825,7 +705,7 @@ body:has(.admin-login-wrapper) > main {
   }
 
   .admin-topbar {
-    @apply h-[72px] bg-white border-b border-[#eceef3] flex items-center justify-between gap-4 px-8;
+    @apply h-18 bg-white border-b border-[#eceef3] flex items-center justify-between gap-4 px-8;
   }
 
   .admin-search,
@@ -850,11 +730,11 @@ body:has(.admin-login-wrapper) > main {
   }
 
   .admin-search-input {
-    @apply w-full min-h-[2.75rem] py-[0.65rem]! pl-[2.75rem]! pr-[2.75rem]! border border-[#dfe3ea] rounded-full bg-[#f8fafc] text-[#1f2937] shadow-[inset_0_1px_1px_rgba(15,23,42,0.03)] transition-[border-color,box-shadow,background] duration-200 placeholder:text-[#9aa3af] focus:border-flame focus:bg-white focus:shadow-[0_0_0_4px_rgba(255,77,28,0.12)] focus:outline-none;
+    @apply w-full min-h-[2.75rem] py-[0.65rem]! pl-[2.75rem]! pr-11! border border-[#dfe3ea] rounded-full bg-[#f8fafc] transition-[border-color,box-shadow,background] duration-200 placeholder:text-[#9aa3af] focus:shadow-[0_0_0_4px_rgba(255,77,28,0.12)] focus:outline-none;
   }
 
   .admin-search .admin-btn-icon {
-    @apply -ml-12 z-[1] text-[#6b7280];
+    @apply -ml-12 z-1 text-[#6b7280];
   }
 
   .admin-empty-cell {
@@ -900,7 +780,7 @@ body:has(.admin-login-wrapper) > main {
   }
 
   .admin-metric-card {
-    @apply min-h-[170px] p-6 grid justify-items-center content-center text-center gap-[0.45rem];
+    @apply min-h-42.5 p-6 grid justify-items-center content-center text-center gap-[0.45rem];
   }
 
   .admin-metric-card strong {
@@ -1006,7 +886,7 @@ body:has(.admin-login-wrapper) > main {
   }
 
   .admin-highlight-panel {
-    @apply min-h-[440px] bg-[linear-gradient(160deg,var(--color-flame)_0%,#20100b_100%)] text-white overflow-hidden relative flex flex-col justify-between gap-6;
+    @apply min-h-110 bg-[linear-gradient(160deg,var(--color-flame)_0%,#20100b_100%)] text-white overflow-hidden relative flex flex-col justify-between gap-6;
   }
 
   .admin-highlight-panel::after {
@@ -1029,7 +909,7 @@ body:has(.admin-login-wrapper) > main {
   .admin-highlight-panel p,
   .admin-highlight-panel .admin-mini-list,
   .admin-highlight-action {
-    @apply relative z-[1];
+    @apply relative z-1;
   }
 
   .admin-highlight-panel h2 {

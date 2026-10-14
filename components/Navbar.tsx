@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { motion, Variants } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { Menu, X, ArrowRight } from "lucide-react";
@@ -23,15 +24,48 @@ const navLinks = [
   { href: "/#testimonials", label: "Testimonials" },
 ];
 
+const itemVariant: Variants = {
+  hidden: { opacity: 0, x: 30 },
+  visible: { opacity: 1, x: 0 },
+};
+
+const containerVariant: Variants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.06,
+      delayChildren: 0.1,
+    },
+  },
+};
+
 export default function Navbar({ user }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
 
   const closeMenu = () => setIsOpen(false);
 
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 10);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <header className="navbar">
-      <div className="navbar-inner mx-auto max-w-[1200px] px-5">
-        <div className="flex items-center gap-4 flex-wrap">
+    <motion.header
+      className={`navbar ${scrolled ? "scrolled" : ""}`}
+      initial={{ y: -20, opacity: 0 }}
+      animate={{ y: 0, opacity: 1 }}
+      transition={{ duration: 0.5, ease: "easeOut" }}
+    >
+      <div className="navbar-inner mx-auto max-w-300 px-5">
+        <motion.div
+          className="flex items-center gap-4 flex-wrap"
+          initial={{ opacity: 0, x: -20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut" }}
+        >
           <Link
             href="/"
             className="nav-logo"
@@ -55,82 +89,130 @@ export default function Navbar({ user }: NavbarProps) {
               />
             </div>
           </Link>
-        </div>
-        <nav className="desktop-nav" aria-label="Primary navigation">
+
+          {/* Hairline separator between logo and nav */}
+          <span
+            aria-hidden
+            className="hidden lg:block h-6 w-px rule-fade-down self-center opacity-40"
+          />
+        </motion.div>
+
+        <motion.nav
+          className="desktop-nav"
+          aria-label="Primary navigation"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.15 }}
+        >
           <ul className="nav-links">
             {navLinks.map((link) => (
-              <li key={link.href}>
-                <Link href={link.href} className="nav-link">
+              <motion.li key={link.href} whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+                <Link
+                  href={link.href}
+                  className="nav-link"
+                  onClick={closeMenu}
+                >
                   {link.label}
                 </Link>
-              </li>
+              </motion.li>
             ))}
           </ul>
-        </nav>
+        </motion.nav>
 
-        <div className="nav-actions desktop-only">
+
+        <motion.div
+          className="nav-actions desktop-only"
+          initial={{ opacity: 0, x: 20 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 0.5, ease: "easeOut", delay: 0.2 }}
+        >
           {user?.isLoggedIn && user.role === "admin" ? (
-            <Link href="/admin" className="btn-secondary">
-              Admin
-            </Link>
+            <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+              <Link href="/admin" className="btn-secondary">
+                Admin
+              </Link>
+            </motion.div>
           ) : null}
-          <Link href="/contact" className="btn-primary-nav">
-            Get Started <ArrowRight size={16} />
-          </Link>
-        </div>
+          <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
+            <Link href="/contact" className="btn-primary-nav">
+              Get Started <ArrowRight size={16} />
+            </Link>
+          </motion.div>
+        </motion.div>
 
-        <button
+        <motion.button
           type="button"
           className="mobile-toggle"
           aria-label={isOpen ? "Close menu" : "Open menu"}
           aria-expanded={isOpen}
           onClick={() => setIsOpen((current) => !current)}
+          whileTap={{ scale: 0.9 }}
         >
           {isOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
+        </motion.button>
+    
+   
 
       {isOpen ? (
-        <button
+        <motion.button
           className="nav-backdrop"
           aria-label="Close menu"
           onClick={closeMenu}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.2 }}
         />
       ) : null}
+        </div>
 
-      <nav
+      <motion.nav
         className={`mobile-drawer ${isOpen ? "open" : ""}`}
         aria-label="Mobile navigation"
+        initial={{ x: "100%" }}
+        animate={{ x: isOpen ? 0 : "100%" }}
+        exit={{ x: "100%" }}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
       >
-        <div className="mobile-drawer-content">
+        <motion.div
+          className="mobile-drawer-content"
+          variants={containerVariant}
+          initial="hidden"
+          animate={isOpen ? "visible" : "hidden"}
+        >
           {navLinks.map((link) => (
-            <Link
-              key={link.href}
-              href={link.href}
-              className="nav-link"
-              onClick={closeMenu}
-            >
-              {link.label}
-            </Link>
+            <motion.div key={link.href} variants={itemVariant}>
+              <Link
+                href={link.href}
+                className="nav-link"
+                onClick={closeMenu}
+              >
+                {link.label}
+              </Link>
+            </motion.div>
           ))}
           {user?.isLoggedIn && user.role === "admin" ? (
+            <motion.div variants={itemVariant}>
+              <Link
+                href="/admin"
+                className="btn-secondary mobile-btn"
+                onClick={closeMenu}
+              >
+                Admin
+              </Link>
+            </motion.div>
+          ) : null}
+          <motion.div variants={itemVariant}>
             <Link
-              href="/admin"
-              className="btn-secondary mobile-btn"
+              href="/contact"
+              className="btn-primary-nav mobile-btn"
               onClick={closeMenu}
             >
-              Admin
+              Get Started <ArrowRight size={16} />
             </Link>
-          ) : null}
-          <Link
-            href="/contact"
-            className="btn-primary-nav mobile-btn"
-            onClick={closeMenu}
-          >
-            Get Started <ArrowRight size={16} />
-          </Link>
-        </div>
-      </nav>
-    </header>
+          </motion.div>
+        </motion.div>
+      </motion.nav>
+    </motion.header>
   );
 }

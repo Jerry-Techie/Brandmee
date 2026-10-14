@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { motion } from 'framer-motion';
 import { Check, ArrowRight, Calculator, ArrowLeftCircleIcon } from 'lucide-react';
 
 export default function PricingCalculator() {

@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Star } from "lucide-react";
 import Image from "next/image";
 import { getTestimonials, Testimonial } from "@/lib/testimonials";
@@ -75,8 +76,14 @@ export default function TestimonialsPage() {
 
   return (
     <section id="testimonials" className="py-20 lg:py-24">
-      <div className="mx-auto max-w-[1200px] px-5">
-        <div className="max-w-2xl mb-12">
+      <div className="mx-auto max-w-300 px-5">
+        <motion.div
+          className="max-w-2xl mb-12"
+          initial={{ opacity: 0, y: 20 }}
+          whileInView={{ opacity: 1, y: 0 }}
+          viewport={{ once: true }}
+          transition={{ duration: 0.6, ease: "easeOut" }}
+        >
           <div className="flex items-center gap-3 mb-5">
             <span className="h-px w-10 bg-gold" />
             <span className="text-xs font-semibold uppercase tracking-[0.25em] text-gold">
@@ -89,20 +96,32 @@ export default function TestimonialsPage() {
           <p className="text-mist text-base leading-relaxed">
             Real feedback from businesses building a sharper online presence.
           </p>
-        </div>
+        </motion.div>
 
-        <div className="max-w-3xl">
+        <motion.div
+          className="max-w-3xl"
+          initial="hidden"
+          whileInView="visible"
+          viewport={{ once: true, amount: 0.1 }}
+          variants={{
+            hidden: {},
+            visible: { transition: { staggerChildren: 0.1, delayChildren: 0.2 } },
+          }}
+        >
           {loading
             ? Array.from({ length: 3 }).map((_, index) => (
-                <article
+                <motion.article
                   className="border-t border-white/10 py-10 animate-pulse"
                   key={`skeleton-${index}`}
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.4, delay: index * 0.1 }}
                 >
-                  <div className="flex gap-[0.25rem] mb-6">
+                  <div className="flex gap-1 mb-6">
                     {Array.from({ length: 5 }).map((_, starIndex) => (
                       <span
                         key={starIndex}
-                        className="w-[18px] h-[18px] rounded-sm bg-white/10"
+                        className="w-4.5 h-4.5 rounded-sm bg-white/10"
                       />
                     ))}
                   </div>
@@ -115,49 +134,69 @@ export default function TestimonialsPage() {
                       <span className="h-3 bg-white/10 rounded w-48" />
                     </div>
                   </div>
-                </article>
+                </motion.article>
               ))
             : testimonials.map((item, index) => (
-            <article
-              className="border-t border-white/10 py-10"
-              key={item.id ?? `${item.name}-${index}`}
-            >
-              <div className="flex gap-[0.25rem] text-amber-500 mb-6">
-                {Array.from({ length: Math.max(1, Math.min(item.rating || 5, 5)) }).map((_, starIndex) => (
-                  <Star key={starIndex} size={18} fill="currentColor" />
-                ))}
-              </div>
+              <motion.article
+                className="border-t border-white/10 py-10"
+                key={item.id ?? `${item.name}-${index}`}
+                variants={{
+                  hidden: { opacity: 0, y: 20 },
+                  visible: { opacity: 1, y: 0 },
+                }}
+              >
+                <motion.div
+                  className="flex gap-1 text-amber-500 mb-6"
+                  initial={{ opacity: 0, scale: 0.8 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  transition={{ duration: 0.4, delay: 0.1 }}
+                >
+                  {Array.from({ length: Math.max(1, Math.min(item.rating || 5, 5)) }).map((_, starIndex) => (
+                    <Star key={starIndex} size={18} fill="currentColor" />
+                  ))}
+                </motion.div>
 
-              <blockquote className="text-xl md:text-2xl leading-relaxed text-cream mb-8 font-syne">
-                "{item.quote}"
-              </blockquote>
+                <motion.blockquote
+                  className="text-xl md:text-2xl leading-relaxed text-cream mb-8 font-syne"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.15 }}
+                >
+                  "{item.quote}"
+                </motion.blockquote>
 
-              <div className="flex items-center gap-4">
-                {item.avatar ? (
-                  <div
-                    className="relative w-12 h-12 rounded-full overflow-hidden border border-charcoal shrink-0"
-                  >
-                    <Image src={item.avatar} alt={item.name} fill className="object-cover" />
+                <motion.div
+                  className="flex items-center gap-4"
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.5, delay: 0.2 }}
+                >
+                  {item.avatar ? (
+                    <div
+                      className="relative w-12 h-12 rounded-full overflow-hidden border border-charcoal shrink-0"
+                    >
+                      <Image src={item.avatar} alt={item.name} fill className="object-cover" />
+                    </div>
+                  ) : (
+                    <motion.div
+                      className="w-12 h-12 rounded-full bg-flame text-white flex items-center justify-center font-bold shrink-0"
+                      whileHover={{ scale: 1.1, rotate: 5 }}
+                    >
+                      {item.name.charAt(0)}
+                    </motion.div>
+                  )}
+
+                  <div>
+                    <strong className="block text-white leading-[1.2]">{item.name}</strong>
+                    <span className="text-mist text-sm">
+                      {item.role}
+                      {item.company ? `, ${item.company}` : ""}
+                    </span>
                   </div>
-                ) : (
-                  <div
-                    className="w-12 h-12 rounded-full bg-flame text-white flex items-center justify-center font-bold shrink-0"
-                  >
-                    {item.name.charAt(0)}
-                  </div>
-                )}
-
-                <div>
-                  <strong className="block text-white leading-[1.2]">{item.name}</strong>
-                  <span className="text-mist text-sm">
-                    {item.role}
-                    {item.company ? `, ${item.company}` : ""}
-                  </span>
-                </div>
-              </div>
-            </article>
-          ))}
-        </div>
+                </motion.div>
+              </motion.article>
+            ))}
+        </motion.div>
       </div>
     </section>
   );

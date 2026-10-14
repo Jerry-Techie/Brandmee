@@ -39,22 +39,17 @@ import {
   Star,
   UserCircle,
 } from "lucide-react";
-import {
-  getVisitorEvents,
-  VisitorEvent,
-} from "@/lib/visitorTracker";
+import { getVisitorEvents, VisitorEvent } from "@/lib/visitorTracker";
 
 export default function AdminPage() {
-   const [isOpen, setIsOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
 
-    const closeMenu = () => setIsOpen(false);
+  const closeMenu = () => setIsOpen(false);
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [activeTab, setActiveTab] = useState<
     "projects" | "testimonials" | "visitors"
-  >(
-    "projects",
-  );
+  >("projects");
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
   // Auth state
@@ -400,7 +395,13 @@ export default function AdminPage() {
   const filteredVisitors = visitors.filter((visitor) => {
     const q = searchQuery.trim().toLowerCase();
     if (!q) return true;
-    return [visitor.path, visitor.referrer, visitor.language, visitor.timezone, visitor.sessionId]
+    return [
+      visitor.path,
+      visitor.referrer,
+      visitor.language,
+      visitor.timezone,
+      visitor.sessionId,
+    ]
       .join(" ")
       .toLowerCase()
       .includes(q);
@@ -417,7 +418,9 @@ export default function AdminPage() {
           filteredTestimonials.length
         ).toFixed(1)
       : "0.0";
-  const uniqueVisitors = new Set(filteredVisitors.map((visitor) => visitor.sessionId)).size;
+  const uniqueVisitors = new Set(
+    filteredVisitors.map((visitor) => visitor.sessionId),
+  ).size;
 
   if (loading) {
     return (
@@ -484,18 +487,14 @@ export default function AdminPage() {
     <div className="admin-container admin-dashboard-shell">
       <aside className={`admin-sidebar ${sidebarOpen ? "open" : ""}`}>
         <div className="admin-office">
-          <div
-            className="mt-2.5 flex flex-col gap-1"
-          >
+          <div className="mt-2.5 flex flex-col gap-1">
             <Link
               href="/admin"
               className="nav-logo"
               aria-label="BrandME admin"
               onClick={closeMenu}
             >
-              <div
-                className="flex items-center gap-3"
-              >
+              <div className="flex items-center gap-3">
                 <Image
                   src="/images/logo/brandmeIcon-logo.svg"
                   alt="BrandME Icon"
@@ -591,12 +590,8 @@ export default function AdminPage() {
           >
             ☰
           </button>
-          <div
-            className="admin-search flex items-center gap-2"
-          >
-            <div
-              className="relative flex items-center"
-            >
+          <div className="admin-search flex items-center gap-2">
+            <div className="relative flex items-center">
               <Search
                 size={18}
                 className="absolute left-3 text-[#6b7280] pointer-events-none"
@@ -727,9 +722,7 @@ export default function AdminPage() {
                   </button>
                 </div>
               ) : (
-                <div
-                  className="admin-dashboard-top py-4"
-                >
+                <div className="admin-dashboard-top py-4">
                   <div>
                     <h2 className="m-0 text-2xl">
                       Search Results for "{searchQuery}"
@@ -750,9 +743,7 @@ export default function AdminPage() {
 
               {/* IF SEARCHING: Show both filtered lists together */}
               {searchQuery.trim() !== "" ? (
-                <div
-                  className="flex flex-col gap-8 mt-4"
-                >
+                <div className="flex flex-col gap-8 mt-4">
                   {/* Projects Search Results */}
                   <div>
                     <h3 className="text-xl mb-3">
@@ -784,9 +775,7 @@ export default function AdminPage() {
                                   <div className="font-semibold">
                                     {project.title}
                                   </div>
-                                  <div
-                                    className="text-xs text-[#6b7280]"
-                                  >
+                                  <div className="text-xs text-[#6b7280]">
                                     {project.description}
                                   </div>
                                 </td>
@@ -841,9 +830,7 @@ export default function AdminPage() {
                             filteredTestimonials.map((item) => (
                               <tr key={item.id}>
                                 <td className="font-semibold">{item.name}</td>
-                                <td
-                                  className="text-[#374151] text-sm"
-                                >
+                                <td className="text-[#374151] text-sm">
                                   "{item.quote}"
                                 </td>
                                 <td className="text-right">
@@ -871,9 +858,7 @@ export default function AdminPage() {
                     <>
                       <div className="admin-dashboard-top">
                         <div>
-                          <h2 className="m-0 text-2xl">
-                            Projects
-                          </h2>
+                          <h2 className="m-0 text-2xl">Projects</h2>
                           <p className="admin-subtitle">
                             Manage, edit, upload, and reorder your portfolio
                             items
@@ -902,9 +887,7 @@ export default function AdminPage() {
                             {projectsToShow.map((project, idx) => (
                               <tr key={project.id}>
                                 <td>
-                                  <div
-                                    className="flex gap-1"
-                                  >
+                                  <div className="flex gap-1">
                                     <button
                                       disabled={idx === 0}
                                       onClick={() =>
@@ -926,16 +909,12 @@ export default function AdminPage() {
                                   </div>
                                 </td>
                                 <td>
-                                  <div
-                                    className="flex items-center gap-3"
-                                  >
+                                  <div className="flex items-center gap-3">
                                     <div>
                                       <div className="font-semibold">
                                         {project.title}
                                       </div>
-                                      <div
-                                        className="text-xs text-[#6b7280]"
-                                      >
+                                      <div className="text-xs text-[#6b7280]">
                                         {project.description}
                                       </div>
                                     </div>
@@ -946,15 +925,11 @@ export default function AdminPage() {
                                     {project.category}
                                   </span>
                                 </td>
-                                <td
-                                  className="text-xs text-[#6b7280]"
-                                >
+                                <td className="text-xs text-[#6b7280]">
                                   {project.tags?.join(", ") || "—"}
                                 </td>
                                 <td className="text-right">
-                                  <div
-                                    className="flex justify-end gap-2"
-                                  >
+                                  <div className="flex justify-end gap-2">
                                     <button
                                       onClick={() =>
                                         openEditProjectModal(project)
@@ -985,9 +960,7 @@ export default function AdminPage() {
                     <>
                       <div className="admin-dashboard-top">
                         <div>
-                          <h2 className="m-0 text-2xl">
-                            Testimonials
-                          </h2>
+                          <h2 className="m-0 text-2xl">Testimonials</h2>
                           <p className="admin-subtitle">
                             Manage client reviews and feedback
                           </p>
@@ -1024,25 +997,17 @@ export default function AdminPage() {
                             ) : (
                               testimonialsToShow.map((item) => (
                                 <tr key={item.id}>
-                                  <td className="font-semibold">
-                                    {item.name}
-                                  </td>
-                                  <td
-                                    className="text-[#6b7280] text-sm"
-                                  >
+                                  <td className="font-semibold">{item.name}</td>
+                                  <td className="text-[#6b7280] text-sm">
                                     {item.role}
                                     {item.company ? ` at ${item.company}` : ""}
                                   </td>
-                                  <td
-                                    className="text-[#374151] text-sm max-w-80"
-                                  >
+                                  <td className="text-[#374151] text-sm max-w-80">
                                     "{item.quote}"
                                   </td>
                                   <td>⭐ {item.rating}</td>
                                   <td className="text-right">
-                                    <div
-                                      className="flex justify-end gap-2"
-                                    >
+                                    <div className="flex justify-end gap-2">
                                       <button
                                         onClick={() =>
                                           openEditTestimonialModal(item)
@@ -1074,9 +1039,7 @@ export default function AdminPage() {
                     <>
                       <div className="admin-dashboard-top">
                         <div>
-                          <h2 className="m-0 text-2xl">
-                            Website Tracker
-                          </h2>
+                          <h2 className="m-0 text-2xl">Website Tracker</h2>
                           <p className="admin-subtitle">
                             Anonymous page views and visitor device details from
                             your public website
@@ -1276,9 +1239,7 @@ export default function AdminPage() {
                     className="form-input p-1"
                   />
                   {imagePreview && (
-                    <div
-                      className="image-preview-wrapper mt-2"
-                    >
+                    <div className="image-preview-wrapper mt-2">
                       <Image
                         src={imagePreview}
                         alt="Preview"
@@ -1396,9 +1357,7 @@ export default function AdminPage() {
                     className="form-input p-1"
                   />
                   {avatarPreview && (
-                    <div
-                      className="relative w-16 h-16 mt-2 rounded-full overflow-hidden border border-[#1e293b]"
-                    >
+                    <div className="relative w-16 h-16 mt-2 rounded-full overflow-hidden border border-[#1e293b]">
                       <Image
                         src={avatarPreview}
                         alt="Avatar preview"

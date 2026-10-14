@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { motion, Variants } from "framer-motion";
 import Image from "next/image";
-import Link from "next/link";
+import BrandMeLink from "@/components/BrandMeLink";
 import { Menu, X, ArrowRight } from "lucide-react";
 
 type NavbarUser = {
@@ -66,7 +66,7 @@ export default function Navbar({ user }: NavbarProps) {
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 0.5, ease: "easeOut" }}
         >
-          <Link
+          <BrandMeLink
             href="/"
             className="nav-logo"
             aria-label="BrandME home"
@@ -88,7 +88,7 @@ export default function Navbar({ user }: NavbarProps) {
                 priority
               />
             </div>
-          </Link>
+          </BrandMeLink>
 
           {/* Hairline separator between logo and nav */}
           <span
@@ -107,13 +107,13 @@ export default function Navbar({ user }: NavbarProps) {
           <ul className="nav-links">
             {navLinks.map((link) => (
               <motion.li key={link.href} whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-                <Link
+                <BrandMeLink
                   href={link.href}
                   className="nav-link"
                   onClick={closeMenu}
                 >
                   {link.label}
-                </Link>
+                </BrandMeLink>
               </motion.li>
             ))}
           </ul>
@@ -128,15 +128,15 @@ export default function Navbar({ user }: NavbarProps) {
         >
           {user?.isLoggedIn && user.role === "admin" ? (
             <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-              <Link href="/admin" className="btn-secondary">
+              <BrandMeLink href="/admin" className="btn-secondary">
                 Admin
-              </Link>
+              </BrandMeLink>
             </motion.div>
           ) : null}
           <motion.div whileHover={{ y: -2 }} transition={{ duration: 0.2 }}>
-            <Link href="/contact" className="btn-primary-nav">
+            <BrandMeLink href="/contact" className="btn-primary-nav">
               Get Started <ArrowRight size={16} />
-            </Link>
+            </BrandMeLink>
           </motion.div>
         </motion.div>
 
@@ -182,34 +182,34 @@ export default function Navbar({ user }: NavbarProps) {
         >
           {navLinks.map((link) => (
             <motion.div key={link.href} variants={itemVariant}>
-              <Link
+              <BrandMeLink
                 href={link.href}
                 className="nav-link"
                 onClick={closeMenu}
               >
                 {link.label}
-              </Link>
+              </BrandMeLink>
             </motion.div>
           ))}
           {user?.isLoggedIn && user.role === "admin" ? (
             <motion.div variants={itemVariant}>
-              <Link
+              <BrandMeLink
                 href="/admin"
                 className="btn-secondary mobile-btn"
                 onClick={closeMenu}
               >
                 Admin
-              </Link>
+              </BrandMeLink>
             </motion.div>
           ) : null}
           <motion.div variants={itemVariant}>
-            <Link
+            <BrandMeLink
               href="/contact"
               className="btn-primary-nav mobile-btn"
               onClick={closeMenu}
             >
               Get Started <ArrowRight size={16} />
-            </Link>
+            </BrandMeLink>
           </motion.div>
         </motion.div>
       </motion.nav>

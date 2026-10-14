@@ -3,6 +3,7 @@ import { DM_Sans, Syne } from "next/font/google";
 import { cookies } from "next/headers";
 import "./globals.css";
 import SiteChrome from "@/components/SiteChrome";
+import LoadingProvider from "@/components/LoadingProvider";
 
 const dmSans = DM_Sans({
   subsets: ["latin"],
@@ -76,7 +77,9 @@ export default async function RootLayout({
   return (
     <html lang="en" className={`${dmSans.variable} ${syne.variable}`}>
       <body>
-        <SiteChrome user={user}>{children}</SiteChrome>
+        <LoadingProvider>
+          <SiteChrome user={user}>{children}</SiteChrome>
+        </LoadingProvider>
       </body>
     </html>
   );

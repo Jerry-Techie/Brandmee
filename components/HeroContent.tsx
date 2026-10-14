@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import BrandMeLink from "@/components/BrandMeLink";
 import { motion } from "framer-motion";
 import { ArrowRight } from "lucide-react";
 
@@ -58,9 +59,9 @@ export default function HeroContent() {
         }}
       >
         <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
-          <Link href="/contact" className="btn-primary">
-            Get Started <ArrowRight size={18} />
-          </Link>
+          <BrandMeLink href="/contact" className="btn-primary">
+             Get Started <ArrowRight size={18} />
+          </BrandMeLink>
         </motion.div>
         <motion.div whileHover={{ scale: 1.03 }} whileTap={{ scale: 0.98 }}>
           <Link href="#portfolio" className="btn-secondary">

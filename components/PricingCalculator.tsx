@@ -1,7 +1,7 @@
 'use client';
 
 import { useState } from 'react';
-import Link from 'next/link';
+import BrandMeLink from '@/components/BrandMeLink';
 import { motion } from 'framer-motion';
 import { Check, ArrowRight, Calculator, ArrowLeftCircleIcon } from 'lucide-react';
 
@@ -132,9 +132,9 @@ export default function PricingCalculator() {
               </li>
             </ul>
             <div className="mt-auto">
-              <Link href="/contact?plan=Starter" className="admin-btn-secondary w-full">
+              <BrandMeLink href="/contact?plan=Starter" className="admin-btn-secondary w-full">
                 Get Started
-              </Link>
+              </BrandMeLink>
             </div>
           </div>
 
@@ -172,12 +172,12 @@ export default function PricingCalculator() {
               </li>
             </ul>
             <div className="mt-auto">
-              <Link
+              <BrandMeLink
                 href="/contact?plan=Growth"
                 className="growth-btn-primary no-underline"
               >
                 Select Growth Plan <ArrowRight size={16} />
-              </Link>
+              </BrandMeLink>
             </div>
           </div>
 
@@ -207,9 +207,9 @@ export default function PricingCalculator() {
               </li>
             </ul>
             <div className="mt-auto">
-              <Link href="/contact?plan=Pro" className="admin-btn-secondary w-full">
+              <BrandMeLink href="/contact?plan=Pro" className="admin-btn-secondary w-full">
                 Select Pro Plan
-              </Link>
+              </BrandMeLink>
             </div>
           </div>
 
@@ -238,9 +238,9 @@ export default function PricingCalculator() {
                 <Check size={16} color="var(--flame)" /> White-label Agency Option
               </li>
             </ul>
-            <Link href="/contact?plan=Enterprise" className="admin-btn-secondary md:w-auto whitespace-nowrap">
+            <BrandMeLink href="/contact?plan=Enterprise" className="admin-btn-secondary md:w-auto whitespace-nowrap">
               Contact Sales
-            </Link>
+            </BrandMeLink>
           </div>
         </div>
 
@@ -319,12 +319,12 @@ export default function PricingCalculator() {
               <p className="text-mist text-[0.95rem] mb-6">
                 + <strong className="text-gold">${customEstimate.monthly}/mo</strong> hosting & ongoing updates
               </p>
-              <Link
+              <BrandMeLink
                 href={`/contact?customQuote=true&pages=${pages}&setup=${customEstimate.setup}&monthly=${customEstimate.monthly}`}
                 className="btn-primary w-full lg:w-auto"
               >
                 Claim This Quote Now <ArrowLeftCircleIcon size={16} />
-              </Link>
+              </BrandMeLink>
             </div>
           </div>
         </div>

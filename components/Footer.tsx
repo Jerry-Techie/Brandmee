@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import BrandMeLink from "@/components/BrandMeLink";
 import Link from "next/link";
 import Image from "next/image";
 import { motion, Variants } from "framer-motion";
@@ -79,7 +80,7 @@ export default function Footer() {
         <div className="grid grid-cols-[repeat(auto-fit,minmax(220px,1fr))] gap-12 mb-16">
           {/* Brand Info */}
           <motion.div variants={fadeUpItem}>
-            <Link href="/" aria-label="BrandME home" onClick={closeMenu}>
+            <BrandMeLink href="/" aria-label="BrandME home" onClick={closeMenu}>
               <motion.div
                 className="flex items-center gap-3"
                 whileHover={{ scale: 1.03 }}
@@ -100,7 +101,7 @@ export default function Footer() {
                   priority
                 />
               </motion.div>
-            </Link>
+            </BrandMeLink>
             <motion.p
               className="text-dim text-[0.95rem] leading-[1.7] mb-6 mt-6"
               initial={{ opacity: 0 }}
@@ -145,13 +146,13 @@ export default function Footer() {
                 { href: '/#portfolio', label: 'Portfolio & Case Studies' },
               ].map((link, idx) => (
                 <motion.li key={link.href} initial={{ opacity: 0, x: -10 }} animate={{ opacity: 1, x: 0 }} transition={{ duration: 0.3, delay: idx * 0.05 + 0.2 }}>
-                  <Link
+                  <BrandMeLink
                     href={link.href}
                     className="text-dim text-[0.95rem]"
                     onClick={closeMenu}
                   >
                     {link.label}
-                  </Link>
+                  </BrandMeLink>
                 </motion.li>
               ))}
             </ul>

@@ -35,7 +35,7 @@ export default function LoadingProvider({ children }: { children: ReactNode }) {
       return;
     }
     sessionStorage.setItem("brandme-loaded", "true");
-    const timer = setTimeout(() => setShowInitial(false), 1500);
+    const timer = setTimeout(() => setShowInitial(false), 2500);
     return () => clearTimeout(timer);
   }, []);
 
